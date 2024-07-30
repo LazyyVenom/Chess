@@ -10,6 +10,7 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 DARK_BROWN = (139, 69, 19)
 LIGHT_BROWN = (245, 222, 179)
+HIGHLIGHT_COLOR = (200, 100, 100)
 
 # Load images
 def load_images():
@@ -20,7 +21,7 @@ def load_images():
     return images
 
 # Handle events
-def handle_events(selected, board):
+def handle_events(selected, board, highlights):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -31,11 +32,16 @@ def handle_events(selected, board):
             if selected:
                 if (row, col) != selected:
                     move_piece(board, selected, (row, col))
-                selected = None
+                    selected = None
+                    highlights = []
+                else:
+                    selected = None
+                    highlights = []
             else:
                 if board[row][col] != "--":
                     selected = (row, col)
-    return selected
+                    highlights = highlight_moves(board, selected)
+    return selected, highlights
 
 # Move pieces
 def move_piece(board, start, end):
@@ -43,12 +49,31 @@ def move_piece(board, start, end):
     board[start[0]][start[1]] = "--"
     board[end[0]][end[1]] = piece
 
+# Possible Moves
+def highlight_moves(board, coords):
+    piece = board[coords[0]][coords[1]]
+    highlights = []
+    if piece == 'wp':
+        if coords[0] == 6:
+            highlights = [(coords[0] - 1, coords[1]), (coords[0] - 2, coords[1])]
+        else:
+            highlights = [(coords[0] - 1, coords[1])]
+    elif piece == 'bp':
+        if coords[0] == 1:
+            highlights = [(coords[0] + 1, coords[1]), (coords[0] + 2, coords[1])]
+        else:
+            highlights = [(coords[0] + 1, coords[1])]
+    return highlights
+
 # Draw the board
-def draw_board(window):
+def draw_board(window, highlights):
     colors = [LIGHT_BROWN, DARK_BROWN]
     for row in range(ROWS):
         for col in range(COLS):
-            color = colors[(row + col) % 2]
+            if (row, col) in highlights:
+                color = HIGHLIGHT_COLOR
+            else:
+                color = colors[(row + col) % 2]
             pygame.draw.rect(window, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
 # Draw the pieces
@@ -79,11 +104,12 @@ def main():
     ]
 
     selected = None
+    highlights = []
 
     clock = pygame.time.Clock()
     while True:
-        selected = handle_events(selected, board)
-        draw_board(window)
+        selected, highlights = handle_events(selected, board, highlights)
+        draw_board(window, highlights)
         draw_pieces(window, board, images)
         pygame.display.flip()
         clock.tick(30)
