@@ -10,7 +10,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 DARK_BROWN = (139, 69, 19)
 LIGHT_BROWN = (245, 222, 179)
-HIGHLIGHT_COLOR = (200, 100, 100)
+HIGHLIGHT_COLOR1 = (200, 100, 100)
+HIGHLIGHT_COLOR2 = (200, 50, 50)
 
 # Load images
 def load_images():
@@ -71,7 +72,7 @@ def draw_board(window, highlights):
     for row in range(ROWS):
         for col in range(COLS):
             if (row, col) in highlights:
-                color = HIGHLIGHT_COLOR
+                color = [HIGHLIGHT_COLOR1,HIGHLIGHT_COLOR2][(row + col) % 2]
             else:
                 color = colors[(row + col) % 2]
             pygame.draw.rect(window, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
