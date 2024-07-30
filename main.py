@@ -59,11 +59,25 @@ def highlight_moves(board, coords):
             highlights = [(coords[0] - 1, coords[1]), (coords[0] - 2, coords[1])]
         else:
             highlights = [(coords[0] - 1, coords[1])]
+
+        if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1] != "--":
+            highlights.append((coords[0] - 1, coords[1] + 1))
+
+        if coords[1] - 1 >= 0 and board[coords[0] - 1][coords[1] - 1] != "--":
+            highlights.append((coords[0] - 1, coords[1] - 1))
+
     elif piece == 'bp':
         if coords[0] == 1:
             highlights = [(coords[0] + 1, coords[1]), (coords[0] + 2, coords[1])]
         else:
             highlights = [(coords[0] + 1, coords[1])]
+
+        if coords[1] + 1 < 8 and board[coords[0] + 1][coords[1] + 1] != "--":
+            highlights.append((coords[0] + 1, coords[1] + 1))
+
+        if coords[1] - 1 >= 0 and board[coords[0] + 1][coords[1] - 1] != "--":
+            highlights.append((coords[0] + 1, coords[1] - 1))
+        
     return highlights
 
 # Draw the board
