@@ -80,7 +80,6 @@ def highlight_moves(board, coords):
         
     return highlights
 
-# Draw the board
 def draw_board(window, highlights):
     colors = [LIGHT_BROWN, DARK_BROWN]
     for row in range(ROWS):
