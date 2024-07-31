@@ -54,7 +54,7 @@ def move_piece(board, start, end):
     #Checking if Pawn is Promoting
     if end[0] == 0 and piece == 'wp':
         board[end[0]][end[1]] = 'wq'
-        
+
     if end[0] == 7 and piece == 'bp':
         board[end[0]][end[1]] = 'bq'
 
@@ -94,8 +94,52 @@ def highlight_moves(board, coords):
         if coords[1] - 1 >= 0 and board[coords[0] + 1][coords[1] - 1] != "--" and board[coords[0] + 1][coords[1] - 1][0] == 'w':
             highlights.append((coords[0] + 1, coords[1] - 1))
         
-    # elif piece == 'wr':
-        
+    elif piece[1] == 'r':
+        row, col = coords[0] + 1, coords[1]
+        opponent = "w" if piece[0] == "b" else "b"
+
+        while row <= 7:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row += 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] - 1, coords[1]
+        while row >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0], coords[1] - 1
+        while col >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0], coords[1] + 1
+        while col <= 7:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col += 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
 
     return highlights
 
