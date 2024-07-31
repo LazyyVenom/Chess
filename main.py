@@ -8,10 +8,11 @@ SQUARE_SIZE = WIDTH // COLS
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-DARK_BROWN = (139, 69, 19)
-LIGHT_BROWN = (245, 222, 179)
-HIGHLIGHT_COLOR1 = (200, 100, 100)
-HIGHLIGHT_COLOR2 = (200, 50, 50)
+DARK_BLUE = (0, 105, 153)
+LIGHT_BLUE = (230, 247, 255)
+HIGHLIGHT_COLOR1 = (255, 179, 179)
+HIGHLIGHT_COLOR2 = (255, 102, 102)
+PIECE_COLOR = (102, 153, 255)
 
 # Load images
 def load_images():
@@ -57,12 +58,12 @@ def highlight_moves(board, coords):
 
     if piece == 'wp':
         if coords[0] == 6 and board[coords[0] - 1][coords[1]] == '--':
-            highlights = [(coords[0] - 1, coords[1])]
+            highlights.append((coords[0] - 1, coords[1]))
             if board[coords[0] - 2][coords[1]] == '--':
                 highlights.append((coords[0] - 2, coords[1]))
 
         elif board[coords[0] - 1][coords[1]] == '--':
-            highlights = [(coords[0] - 1, coords[1])]
+            highlights.append((coords[0] - 1, coords[1]))
 
         if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1] != "--" and board[coords[0] - 1][coords[1] + 1][0] == 'b':
             highlights.append((coords[0] - 1, coords[1] + 1))
@@ -72,13 +73,13 @@ def highlight_moves(board, coords):
 
     elif piece == 'bp':
         if coords[0] == 1 and board[coords[0] + 1][coords[1]] == '--':
-            highlights = [(coords[0] + 1, coords[1])]    
+            highlights.append((coords[0] + 1, coords[1]))   
             if board[coords[0] + 2][coords[1]] == '--':
                 highlights.append((coords[0] + 2, coords[1]))
 
         else:
             if board[coords[0] + 1][coords[1]] == '--':
-                highlights = [(coords[0] + 1, coords[1])]
+                highlights.append((coords[0] + 1, coords[1]))
 
         if coords[1] + 1 < 8 and board[coords[0] + 1][coords[1] + 1] != "--" and board[coords[0] + 1][coords[1] + 1][0] == 'w':
             highlights.append((coords[0] + 1, coords[1] + 1))
@@ -86,16 +87,23 @@ def highlight_moves(board, coords):
         if coords[1] - 1 >= 0 and board[coords[0] + 1][coords[1] - 1] != "--" and board[coords[0] + 1][coords[1] - 1][0] == 'w':
             highlights.append((coords[0] + 1, coords[1] - 1))
         
+    # elif piece == 'wr':
+        
+
     return highlights
 
-def draw_board(window, highlights):
-    colors = [LIGHT_BROWN, DARK_BROWN]
+def draw_board(window, highlights,selected=None):
+    colors = [LIGHT_BLUE, DARK_BLUE]
     for row in range(ROWS):
         for col in range(COLS):
             if (row, col) in highlights:
                 color = [HIGHLIGHT_COLOR1,HIGHLIGHT_COLOR2][(row + col) % 2]
             else:
                 color = colors[(row + col) % 2]
+            
+            if selected and (row,col) == selected:
+                color = PIECE_COLOR
+
             pygame.draw.rect(window, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
 # Draw the pieces
@@ -131,7 +139,7 @@ def main():
     clock = pygame.time.Clock()
     while True:
         selected, highlights = handle_events(selected, board, highlights)
-        draw_board(window, highlights)
+        draw_board(window, highlights,selected)
         draw_pieces(window, board, images)
         pygame.display.flip()
         clock.tick(30)
