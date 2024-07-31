@@ -290,6 +290,42 @@ def highlight_moves(board, coords):
                 break
             else:
                 break
+    
+    elif piece[1] == "n":
+        opponent = "w" if piece[0] == "b" else "b"
+        adds = (2,1,-1,-2)
+        for row_add in adds:
+            for col_add in adds:
+                if not ((row_add in (2,-2) and col_add in (1,-1)) or (row_add in (1,-1) and col_add in (2,-2))):
+                    continue
+                row = coords[0] + row_add
+                col = coords[1] + col_add
+
+                if not (0 <= row <= 7) or not (0 <= col <= 7):
+                    continue
+
+                if board[row][col] == "--":
+                    highlights.append((row,col))
+
+                elif board[row][col][0] == opponent:
+                    highlights.append((row,col))
+
+    # For King    
+    elif piece[1] == 'k':
+        opponent = "w" if piece[0] == "b" else "b"
+        choices = (0,1,-1)
+        for row_add in choices:
+            for col_add in choices:
+                row = coords[0] + row_add
+                col = coords[1] + col_add
+
+                if not (0 <= row <= 7) or not (0 <= col <= 7):
+                    continue
+
+                if board[row][col] == "--":
+                    highlights.append((row,col))
+                elif board[row][col][0] == opponent:
+                    highlights.append((row,col))
 
     return highlights
 
