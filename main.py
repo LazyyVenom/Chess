@@ -54,6 +54,7 @@ def move_piece(board, start, end):
     #Checking if Pawn is Promoting
     if end[0] == 0 and piece == 'wp':
         board[end[0]][end[1]] = 'wq'
+        
     if end[0] == 7 and piece == 'bp':
         board[end[0]][end[1]] = 'bq'
 
