@@ -51,6 +51,12 @@ def move_piece(board, start, end):
     board[start[0]][start[1]] = "--"
     board[end[0]][end[1]] = piece
 
+    #Checking if Pawn is Promoting
+    if end[0] == 0 and piece == 'wp':
+        board[end[0]][end[1]] = 'wq'
+    if end[0] == 7 and piece == 'bp':
+        board[end[0]][end[1]] = 'bq'
+
 # Possible Moves
 def highlight_moves(board, coords):
     piece = board[coords[0]][coords[1]]
