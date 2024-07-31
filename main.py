@@ -63,6 +63,7 @@ def highlight_moves(board, coords):
     piece = board[coords[0]][coords[1]]
     highlights = []
 
+    # For Pawn
     if piece == 'wp':
         if coords[0] == 6 and board[coords[0] - 1][coords[1]] == '--':
             highlights.append((coords[0] - 1, coords[1]))
@@ -93,7 +94,8 @@ def highlight_moves(board, coords):
 
         if coords[1] - 1 >= 0 and board[coords[0] + 1][coords[1] - 1] != "--" and board[coords[0] + 1][coords[1] - 1][0] == 'w':
             highlights.append((coords[0] + 1, coords[1] - 1))
-        
+    
+    #For Rook
     elif piece[1] == 'r':
         row, col = coords[0] + 1, coords[1]
         opponent = "w" if piece[0] == "b" else "b"
@@ -141,6 +143,7 @@ def highlight_moves(board, coords):
             else:
                 break
 
+    # For Bishop
     elif piece[1] == 'b':
         opponent = "w" if piece[0] == "b" else "b"
 
@@ -192,6 +195,7 @@ def highlight_moves(board, coords):
             else:
                 break
     
+    #For Queen
     elif piece[1] == 'q':
         opponent = "w" if piece[0] == "b" else "b"
 
