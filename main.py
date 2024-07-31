@@ -56,26 +56,35 @@ def highlight_moves(board, coords):
     highlights = []
     if piece == 'wp':
         if coords[0] == 6:
-            highlights = [(coords[0] - 1, coords[1]), (coords[0] - 2, coords[1])]
+            if board[coords[0] - 1][coords[1]] == '--':
+                highlights = [(coords[0] - 1, coords[1])]
+                if board[coords[0] - 2][coords[1]] == '--':
+                    highlights.append((coords[0] - 2, coords[1]))
         else:
-            highlights = [(coords[0] - 1, coords[1])]
+            if board[coords[0] - 1][coords[1]] == '--':
+                highlights = [(coords[0] - 1, coords[1])]
 
-        if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1] != "--":
+        if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1] != "--" and board[coords[0] - 1][coords[1] + 1][0] == 'b':
             highlights.append((coords[0] - 1, coords[1] + 1))
 
-        if coords[1] - 1 >= 0 and board[coords[0] - 1][coords[1] - 1] != "--":
+        if coords[1] - 1 >= 0 and board[coords[0] - 1][coords[1] - 1] != "--" and board[coords[0] - 1][coords[1] - 1][0] == 'b':
             highlights.append((coords[0] - 1, coords[1] - 1))
 
     elif piece == 'bp':
         if coords[0] == 1:
-            highlights = [(coords[0] + 1, coords[1]), (coords[0] + 2, coords[1])]
-        else:
-            highlights = [(coords[0] + 1, coords[1])]
+            if board[coords[0] + 1][coords[1]] == '--':
+                highlights = [(coords[0] + 1, coords[1])]    
+                if board[coords[0] + 2][coords[1]] == '--':
+                    highlights.append((coords[0] + 2, coords[1]))
 
-        if coords[1] + 1 < 8 and board[coords[0] + 1][coords[1] + 1] != "--":
+        else:
+            if board[coords[0] + 1][coords[1]] == '--':
+                highlights = [(coords[0] + 1, coords[1])]
+
+        if coords[1] + 1 < 8 and board[coords[0] + 1][coords[1] + 1] != "--" and board[coords[0] + 1][coords[1] + 1][0] == 'w':
             highlights.append((coords[0] + 1, coords[1] + 1))
 
-        if coords[1] - 1 >= 0 and board[coords[0] + 1][coords[1] - 1] != "--":
+        if coords[1] - 1 >= 0 and board[coords[0] + 1][coords[1] - 1] != "--" and board[coords[0] + 1][coords[1] - 1][0] == 'w':
             highlights.append((coords[0] + 1, coords[1] - 1))
         
     return highlights
