@@ -54,15 +54,15 @@ def move_piece(board, start, end):
 def highlight_moves(board, coords):
     piece = board[coords[0]][coords[1]]
     highlights = []
+
     if piece == 'wp':
-        if coords[0] == 6:
-            if board[coords[0] - 1][coords[1]] == '--':
-                highlights = [(coords[0] - 1, coords[1])]
-                if board[coords[0] - 2][coords[1]] == '--':
-                    highlights.append((coords[0] - 2, coords[1]))
-        else:
-            if board[coords[0] - 1][coords[1]] == '--':
-                highlights = [(coords[0] - 1, coords[1])]
+        if coords[0] == 6 and board[coords[0] - 1][coords[1]] == '--':
+            highlights = [(coords[0] - 1, coords[1])]
+            if board[coords[0] - 2][coords[1]] == '--':
+                highlights.append((coords[0] - 2, coords[1]))
+
+        elif board[coords[0] - 1][coords[1]] == '--':
+            highlights = [(coords[0] - 1, coords[1])]
 
         if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1] != "--" and board[coords[0] - 1][coords[1] + 1][0] == 'b':
             highlights.append((coords[0] - 1, coords[1] + 1))
@@ -71,11 +71,10 @@ def highlight_moves(board, coords):
             highlights.append((coords[0] - 1, coords[1] - 1))
 
     elif piece == 'bp':
-        if coords[0] == 1:
-            if board[coords[0] + 1][coords[1]] == '--':
-                highlights = [(coords[0] + 1, coords[1])]    
-                if board[coords[0] + 2][coords[1]] == '--':
-                    highlights.append((coords[0] + 2, coords[1]))
+        if coords[0] == 1 and board[coords[0] + 1][coords[1]] == '--':
+            highlights = [(coords[0] + 1, coords[1])]    
+            if board[coords[0] + 2][coords[1]] == '--':
+                highlights.append((coords[0] + 2, coords[1]))
 
         else:
             if board[coords[0] + 1][coords[1]] == '--':
