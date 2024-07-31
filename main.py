@@ -14,6 +14,13 @@ HIGHLIGHT_COLOR1 = (255, 179, 179)
 HIGHLIGHT_COLOR2 = (255, 102, 102)
 PIECE_COLOR = (102, 153, 255)
 
+b_king_available = True
+b_l_rook_available = True
+b_rook_available = True
+w_king_available = True
+w_l_rook_available = True
+w_rook_available = True
+
 # Load images
 def load_images():
     pieces = ['wp', 'wr', 'wn', 'wb', 'wq', 'wk', 'bp', 'br', 'bn', 'bb', 'bq', 'bk']
@@ -23,7 +30,7 @@ def load_images():
     return images
 
 # Handle events
-def handle_events(selected, board, highlights):
+def handle_events(selected, board, highlights,turn):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -33,7 +40,7 @@ def handle_events(selected, board, highlights):
             row, col = pos[1] // SQUARE_SIZE, pos[0] // SQUARE_SIZE
             if selected:
                 if (row, col) != selected:
-                    move_piece(board, selected, (row, col))
+                    turn = move_piece(board, selected, (row, col),highlights,turn)
                     selected = None
                     highlights = []
                 else:
@@ -41,12 +48,21 @@ def handle_events(selected, board, highlights):
                     highlights = []
             else:
                 if board[row][col] != "--":
-                    selected = (row, col)
-                    highlights = highlight_moves(board, selected)
-    return selected, highlights
+                    if turn and board[row][col][0] == "w":
+                        selected = (row, col)
+                        highlights = highlight_moves(board, selected)
+
+                    elif not turn and board[row][col][0] == "b":
+                        selected = (row, col)
+                        highlights = highlight_moves(board, selected)
+
+    return selected, highlights, turn
 
 # Move pieces
-def move_piece(board, start, end):
+def move_piece(board, start, end, highlights, turn):
+    if end not in highlights:
+        return turn
+
     piece = board[start[0]][start[1]]
     board[start[0]][start[1]] = "--"
     board[end[0]][end[1]] = piece
@@ -57,6 +73,45 @@ def move_piece(board, start, end):
 
     if end[0] == 7 and piece == 'bp':
         board[end[0]][end[1]] = 'bq'
+
+    #Castling Limiter Here
+    if piece[1] == 'k':
+        if piece[0] == 'b':
+            b_king_available = False
+        else:
+            w_king_available = False
+
+    #Checking if its Castling.
+    if piece == 'wk':
+        if start == (7,4) and end == (7,2):
+            board[7][0] = "--"
+            board[7][3] = "wr"
+        elif start == (7,4) and end == (7,6):
+            board[7][7] = "--"
+            board[7][5] = "wr"
+    
+    elif piece == 'bk':
+        if start == (0,4) and end == (0,2):
+            board[0][0] = "--"
+            board[0][3] = "br"
+        elif start == (0,4) and end == (0,6):
+            board[0][7] = "--"
+            board[0][5] = "br"
+
+    if piece[1] == 'r':
+        if piece[0] == 'b':
+            if start == (0,0):
+                b_l_rook_available = False
+            elif start == (0,7):
+                b_rook_available = False
+
+        else:
+            if start == (7,0):
+                b_l_rook_available = False
+            elif start == (7,7):
+                b_rook_available = False
+
+    return not turn
 
 # Possible Moves
 def highlight_moves(board, coords):
@@ -326,6 +381,40 @@ def highlight_moves(board, coords):
                     highlights.append((row,col))
                 elif board[row][col][0] == opponent:
                     highlights.append((row,col))
+        
+        if piece[0] == 'b':
+            empty_check_l = [(0,1),(0,2),(0,3)]
+            l_castle = w_l_rook_available and w_king_available
+            empty_check = [(0,5),(0,6)]
+            castle = w_rook_available and w_king_available
+            for ch in empty_check_l:
+                if board[ch[0]][ch[1]] != "--":
+                    l_castle = False
+            for ch in empty_check:
+                if board[ch[0]][ch[1]] != "--":
+                    castle = False
+
+            if l_castle and board[0][0] == 'br':
+                highlights.append((0,2))
+            if castle and board[0][7] == 'br':
+                highlights.append((0,6))
+            
+        else:
+            empty_check_l = [(7,1),(7,2),(7,3)]
+            l_castle = b_l_rook_available and b_king_available
+            empty_check = [(7,5),(7,6)]
+            castle = b_rook_available and b_rook_available
+            for ch in empty_check_l:
+                if board[ch[0]][ch[1]] != "--":
+                    l_castle = False
+            for ch in empty_check:
+                if board[ch[0]][ch[1]] != "--":
+                    castle = False
+
+            if l_castle and board[7][0] == 'wr':
+                highlights.append((7,2))
+            if castle and board[7][7] == 'wr':
+                highlights.append((7,6))
 
     return highlights
 
@@ -372,10 +461,11 @@ def main():
 
     selected = None
     highlights = []
+    turn = True
 
     clock = pygame.time.Clock()
     while True:
-        selected, highlights = handle_events(selected, board, highlights)
+        selected, highlights,turn = handle_events(selected, board, highlights,turn)
         draw_board(window, highlights,selected)
         draw_pieces(window, board, images)
         pygame.display.flip()
