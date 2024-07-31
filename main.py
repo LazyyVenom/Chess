@@ -141,6 +141,152 @@ def highlight_moves(board, coords):
             else:
                 break
 
+    elif piece[1] == 'b':
+        opponent = "w" if piece[0] == "b" else "b"
+
+        row, col = coords[0] + 1, coords[1] + 1
+        while row <= 7 and col <= 7:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row += 1
+                col += 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] + 1, coords[1] - 1
+        while row <= 7 and col >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row += 1
+                col -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] - 1, coords[1] - 1
+        while col >= 0 and row >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col -= 1
+                row -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] - 1, coords[1] + 1
+        while col <= 7 and row >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col += 1
+                row -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+    
+    elif piece[1] == 'q':
+        opponent = "w" if piece[0] == "b" else "b"
+
+        row, col = coords[0] + 1, coords[1]
+        while row <= 7:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row += 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] - 1, coords[1]
+        while row >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0], coords[1] - 1
+        while col >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0], coords[1] + 1
+        while col <= 7:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col += 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] + 1, coords[1] + 1
+        while row <= 7 and col <= 7:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row += 1
+                col += 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] + 1, coords[1] - 1
+        while row <= 7 and col >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                row += 1
+                col -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] - 1, coords[1] - 1
+        while col >= 0 and row >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col -= 1
+                row -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
+        row, col = coords[0] - 1, coords[1] + 1
+        while col <= 7 and row >= 0:
+            if board[row][col] == "--":
+                highlights.append((row,col))
+                col += 1
+                row -= 1
+            elif board[row][col][0] == opponent:
+                highlights.append((row,col))
+                break
+            else:
+                break
+
     return highlights
 
 def draw_board(window, highlights,selected=None):
