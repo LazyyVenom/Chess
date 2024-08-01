@@ -418,6 +418,7 @@ def highlight_moves(board, coords):
 
     return highlights
 
+
 def draw_board(window, highlights,selected=None):
     colors = [LIGHT_BLUE, DARK_BLUE]
     for row in range(ROWS):
