@@ -113,6 +113,9 @@ def move_piece(board, start, end, highlights, turn):
 
     return not turn
 
+def king_can_be_captured():
+    pass
+
 # Possible Moves
 def highlight_moves(board, coords):
     piece = board[coords[0]][coords[1]]
