@@ -119,6 +119,8 @@ def king_can_be_captured():
 def king_in_check():
     pass
 
+def king_will_be_in_check():
+    pass
 
 # Possible Moves
 def highlight_moves(board, coords):
