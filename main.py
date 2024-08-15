@@ -124,7 +124,7 @@ def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tup
     for king_move in old_highlights:
         board[king_cords[0]][king_cords[1]] == '--'
         board[king_move[0]][king_move[1]] == f'{king_color}k'
-        
+
         for i in range(8):
             for j in range(8):
                 if board[i][j][1] == 'k':
@@ -132,6 +132,9 @@ def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tup
 
                 if board[i][j][0] == opp_color:
                     opp_moves = highlight_moves(board,(i,j))
+                    print(board[i][j])
+                    print(opp_moves)
+                    print(king_move)
                     if king_move in opp_moves:
                         highlights.remove(king_move)
         
