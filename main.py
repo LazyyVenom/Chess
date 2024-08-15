@@ -425,6 +425,8 @@ def highlight_moves(board, coords):
             if castle and board[7][7] == 'wr':
                 highlights.append((7,6))
 
+        #After Everything Need to check if King is getting Checked in any Position.
+
     return highlights
 
 
