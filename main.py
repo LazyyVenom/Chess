@@ -114,15 +114,19 @@ def move_piece(board, start, end, highlights, turn):
 
     return not turn
 
-def king_can_be_captured(king_cords: str, board: List[list[str]]):
+def king_can_be_captured(king_cords, board: List[list[str]]):
     opp_color = 'w' if board[king_cords[0]][king_cords[1]][0] == 'b' else 'b'
 
     opp_moves = []
     for i in range(8):
         for j in range(8):
+            if board[i][j][1] == 'k':
+                continue
+            
             if board[i][j][0] == opp_color:
                 opp_moves.extend(highlight_moves(board,(i,j)))
 
+    return opp_moves
 
 
 def king_in_check():
@@ -433,12 +437,18 @@ def highlight_moves(board, coords):
                 highlights.append((7,2))
             if castle and board[7][7] == 'wr':
                 highlights.append((7,6))
-
+        
         #After Everything Need to check if King is getting Checked in any Position.
+        checked_here = king_can_be_captured(coords,board)
+        checked_moves = set(checked_here).intersection(set(highlights))
+        
+        print(highlights)
+        print(checked_moves)
 
+        for move in checked_moves:
+            highlights.remove(move)
 
     return highlights
-
 
 
 def draw_board(window, highlights,selected=None):
