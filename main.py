@@ -122,7 +122,7 @@ def king_can_be_captured(king_cords, board: List[list[str]]):
         for j in range(8):
             if board[i][j][1] == 'k':
                 continue
-            
+
             if board[i][j][0] == opp_color:
                 opp_moves.extend(highlight_moves(board,(i,j)))
 
@@ -441,10 +441,7 @@ def highlight_moves(board, coords):
         #After Everything Need to check if King is getting Checked in any Position.
         checked_here = king_can_be_captured(coords,board)
         checked_moves = set(checked_here).intersection(set(highlights))
-        
-        print(highlights)
-        print(checked_moves)
-
+    
         for move in checked_moves:
             highlights.remove(move)
 
