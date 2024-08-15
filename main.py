@@ -1,3 +1,4 @@
+from typing import List
 import pygame
 import sys
 
@@ -113,8 +114,16 @@ def move_piece(board, start, end, highlights, turn):
 
     return not turn
 
-def king_can_be_captured():
-    pass
+def king_can_be_captured(king_cords: str, board: List[list[str]]):
+    opp_color = 'w' if board[king_cords[0]][king_cords[1]][0] == 'b' else 'b'
+
+    opp_moves = []
+    for i in range(8):
+        for j in range(8):
+            if board[i][j][0] == opp_color:
+                opp_moves.extend(highlight_moves(board,(i,j)))
+
+
 
 def king_in_check():
     pass
@@ -426,6 +435,7 @@ def highlight_moves(board, coords):
                 highlights.append((7,6))
 
         #After Everything Need to check if King is getting Checked in any Position.
+
 
     return highlights
 
