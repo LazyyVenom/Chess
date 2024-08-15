@@ -114,17 +114,28 @@ def move_piece(board, start, end, highlights, turn):
 
     return not turn
 
-def king_can_be_captured(king_cords, board: List[list[str]]):
+def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tuple]):
     opp_color = 'w' if board[king_cords[0]][king_cords[1]][0] == 'b' else 'b'
+    king_color = board[king_cords[0]][king_cords[1]][0]
+    old_highlights = highlights.copy()
 
-    opp_moves = []
-    for i in range(8):
-        for j in range(8):
-            if board[i][j][1] == 'k':
-                continue
+    old_board = board.copy()
 
-            if board[i][j][0] == opp_color:
-                opp_moves.extend(highlight_moves(board,(i,j)))
+    for king_move in old_highlights:
+        board[king_cords[0]][king_cords[1]] == '--'
+        board[king_move[0]][king_move[1]] == f'{king_color}k'
+        
+        for i in range(8):
+            for j in range(8):
+                if board[i][j][1] == 'k':
+                    continue
+
+                if board[i][j][0] == opp_color:
+                    opp_moves = highlight_moves(board,(i,j))
+                    if king_move in opp_moves:
+                        highlights.remove(king_move)
+        
+        board = old_board.copy()
 
     return opp_moves
 
@@ -439,7 +450,7 @@ def highlight_moves(board, coords):
                 highlights.append((7,6))
         
         #After Everything Need to check if King is getting Checked in any Position.
-        checked_here = king_can_be_captured(coords,board)
+        checked_here = king_can_be_captured(coords,board,highlights)
         checked_moves = set(checked_here).intersection(set(highlights))
     
         for move in checked_moves:
