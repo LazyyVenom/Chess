@@ -1,6 +1,7 @@
 from typing import List
 import pygame
 import sys
+import copy
 
 # Define constants
 WIDTH, HEIGHT = 600, 600
@@ -116,29 +117,27 @@ def move_piece(board, start, end, highlights, turn):
 
 def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tuple]):
     opp_color = 'w' if board[king_cords[0]][king_cords[1]][0] == 'b' else 'b'
-    king_color = board[king_cords[0]][king_cords[1]][0]
+    king = 'bk' if opp_color == 'w' else 'wk'
     old_highlights = highlights.copy()
 
-    old_board = board.copy()
+    test_board = copy.deepcopy(board)
 
     for king_move in old_highlights:
-        board[king_cords[0]][king_cords[1]] == '--'
-        board[king_move[0]][king_move[1]] == board[king_cords[0]][king_cords[1]]
+        test_board[king_cords[0]][king_cords[1]] = '--'
+        test_board[king_move[0]][king_move[1]] = king
 
         for i in range(8):
             for j in range(8):
-                if board[i][j][1] == 'k':
+                if test_board[i][j][1] == 'k':
                     continue
 
-                if board[i][j][0] == opp_color:
-                    opp_moves = highlight_moves(board,(i,j))
-                    print(board[i][j], i,j)
-                    print(opp_moves)
-                    print(king_move)
-                    if king_move in opp_moves:
+                if test_board[i][j][0] == opp_color:
+                    opp_moves = highlight_moves(test_board,(i,j))
+                
+                    if king_move in opp_moves and king_move in highlights:
                         highlights.remove(king_move)
         
-        board = old_board.copy()
+        test_board = copy.deepcopy(board)
 
     return opp_moves
 
