@@ -166,6 +166,7 @@ def highlight_moves(board, coords):
         if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1] != "--" and board[coords[0] - 1][coords[1] + 1][0] == 'b':
             highlights.append((coords[0] - 1, coords[1] + 1))
 
+
         if coords[1] - 1 >= 0 and board[coords[0] - 1][coords[1] - 1] != "--" and board[coords[0] - 1][coords[1] - 1][0] == 'b':
             highlights.append((coords[0] - 1, coords[1] - 1))
 
