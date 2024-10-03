@@ -143,6 +143,9 @@ def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tup
 
 
 def king_in_check():
+    """
+    Checks if king in check for restricting other pieces movement
+    """
     pass
 
 def king_will_be_in_check():
