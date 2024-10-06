@@ -138,7 +138,6 @@ def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tup
                         highlights.remove(king_move)
         
         test_board = copy.deepcopy(board)
-
     return opp_moves
 
 
