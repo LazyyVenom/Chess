@@ -142,11 +142,25 @@ def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tup
     return opp_moves
 
 
-def king_in_check():
+def king_in_check(board: List[list[str]], turn):
     """
     Checks if king in check for restricting other pieces movement.
     """
-    pass
+    king_coords = ()
+    for i,row in enumerate(board):
+        if f'{turn}k' in row:
+            king_coords = (i,row.index(f'{turn}k'))
+            break
+    
+    
+    for i, row in enumerate(board):
+        for j, piece in enumerate(row):
+            if piece != "--" and piece[0] != turn:
+                piece_moves = highlight_moves(board,(i,j))
+                if king_coords in piece_moves:
+                    return True
+            
+    return False
 
 def king_will_be_in_check():
     """
