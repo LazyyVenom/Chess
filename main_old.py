@@ -141,6 +141,7 @@ def king_can_be_captured(king_cords, board: List[list[str]],highlights: List[tup
     return opp_moves
 
 
+
 def king_in_check(board: List[list[str]], turn):
     """
     Checks if king in check for restricting other pieces movement.
