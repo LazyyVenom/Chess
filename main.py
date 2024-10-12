@@ -171,7 +171,7 @@ def main():
                 if (WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index - 1) % len(version_names)
-                elif (WIDTH // 2 + 120 <= mouse_pos[0] <= WIDTH // 2 + 140 and 
+                elif (WIDTH // 2 + 110 <= mouse_pos[0] <= WIDTH // 2 + 130 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index + 1) % len(version_names)
 
