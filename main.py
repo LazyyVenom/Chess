@@ -82,16 +82,6 @@ def main_menu():
     draw_button("Instructions", WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + 50, instructions_screen)
     draw_button("Code", WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + 150, open_github)
 
-def play_screen():
-    global current_screen
-    current_screen = "play_screen"
-    screen.fill(DARK_GRAY)
-    
-    title_surface = title_font.render("Play With", True, WHITE)
-    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-    screen.blit(title_surface, title_rect)
-
-    draw_back_button()
 
 def instructions_screen():
     global current_screen
