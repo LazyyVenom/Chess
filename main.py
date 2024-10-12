@@ -2,43 +2,35 @@ import pygame
 import sys
 import webbrowser
 
-# Initialize Pygame
 pygame.init()
 
-# Screen settings
 WIDTH, HEIGHT = 1000, 600 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("DeadFish")
 
-# Colors (dark theme)
 DARK_GRAY = (30, 30, 30)
 BLACK = (0, 0, 0)
 BLUE = (0, 102, 204)
 LIGHT_BLUE = (100, 149, 237)
 WHITE = (255, 255, 255)
-GREEN = (0, 255, 0)  # Change selected color to green
+GREEN = (0, 255, 0)  
 SHADOW_COLOR = (50, 50, 50)
 
-# Font
 title_font = pygame.font.Font(None, 100)  
 button_font = pygame.font.Font(None, 48)
 
-# Button settings
 BUTTON_WIDTH, BUTTON_HEIGHT = 250, 60
 HOVER_SCALE = 1.05  
 ANIMATION_SPEED = 0.05
 
-# Screen management
 current_screen = "main_menu"
 
-# Track button scales for animation
-button_scales = {"Play": 1.0, "Instructions": 1.0, "Code": 1.0, "Back": 1.0}
+button_scales = {"Play": 1.0, "Instructions": 1.0, "Code": 1.0, "Back": 1.0, "New Button": 1.0}
 code_button_clicked = False
 
-# Global variables to store selected color and version
-selected_color = "white"  # Default selected color set to white
+selected_color = "white"  
 version_names = ["DeadFish V1", "DeadFish V2", "DeadFish V3"]
-current_version_index = 0  # Default index for version names
+current_version_index = 0  
 
 def draw_button(text, x, y, action=None):
     global button_scales, code_button_clicked
@@ -107,15 +99,12 @@ def instructions_screen():
     draw_back_button()
 
 def draw_color_box(x, y, color, selected):
-    """Draws a color box with a border if selected."""
     box_rect = pygame.Rect(x, y, 100, 100)
-    
-    # Border color (green if selected, black otherwise)
     border_color = GREEN if selected else BLACK
-    pygame.draw.rect(screen, border_color, box_rect, border_radius=10)  # Border
+    pygame.draw.rect(screen, border_color, box_rect, border_radius=10)  
     fill_color = WHITE if color == "white" else BLACK
     inner_rect = box_rect.inflate(-10, -10)
-    pygame.draw.rect(screen, fill_color, inner_rect, border_radius=10)  # Inner color
+    pygame.draw.rect(screen, fill_color, inner_rect, border_radius=10)  
 
 def draw_triangle(x, y, direction):
     if direction == "left":
@@ -126,7 +115,6 @@ def draw_triangle(x, y, direction):
 
 def draw_version_selection():
     global current_version_index
-    
     triangle_y = HEIGHT // 2 + 140  
     triangle_x = WIDTH // 2 - 130  
 
@@ -147,14 +135,14 @@ def play_screen():
     title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
     screen.blit(title_surface, title_rect)
 
-    # Draw color boxes
     draw_color_box(WIDTH // 2 - 120, HEIGHT // 2 - 50, "white", selected_color == "white")
     draw_color_box(WIDTH // 2 + 20, HEIGHT // 2 - 50, "black", selected_color == "black")
 
-    # Draw version selection
     draw_version_selection()
+    
+    draw_back_button()
 
-    draw_back_button() 
+    draw_button("New Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, None)
 
 def main():
     global current_screen, selected_color, current_version_index
@@ -168,15 +156,13 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
                 
-                # Check color box selection
                 if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
                         HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
-                    selected_color = "white"  # Select white
+                    selected_color = "white"
                 elif (WIDTH // 2 + 20 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
                         HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
-                    selected_color = "black"  # Select black
+                    selected_color = "black"
 
-                # Check triangle clicks for version selection
                 if (WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index - 1) % len(version_names)
@@ -184,7 +170,6 @@ def main():
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index + 1) % len(version_names)
 
-        # Display the current screen
         if current_screen == "main_menu":
             main_menu()
         elif current_screen == "play_screen":
@@ -194,7 +179,6 @@ def main():
         
         pygame.display.flip()
 
-# Run the game
 if __name__ == "__main__":
     main()
     pygame.quit()
