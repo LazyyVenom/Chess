@@ -131,8 +131,8 @@ def draw_version_selection():
     
     # Position for the version text and triangles
     triangle_y = HEIGHT // 2 + 140  # Position below the color boxes
-    triangle_x = WIDTH // 2 - 100  # X position for left triangle
-    
+    triangle_x = WIDTH // 2 - 120  # X position for left triangle (adjusted for alignment)
+
     # Draw left triangle
     draw_triangle(triangle_x, triangle_y, "left")
     
@@ -142,7 +142,7 @@ def draw_version_selection():
     screen.blit(version_surface, version_rect)
 
     # Draw right triangle
-    draw_triangle(triangle_x + 200, triangle_y, "right")
+    draw_triangle(triangle_x + 240, triangle_y, "right")  # Adjusted for spacing
 
 def play_screen():
     global current_screen
@@ -183,10 +183,10 @@ def main():
                     selected_color = "black"  # Select black
 
                 # Check triangle clicks for version selection
-                if (WIDTH // 2 - 100 <= mouse_pos[0] <= WIDTH // 2 - 80 and 
+                if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 100 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index - 1) % len(version_names)
-                elif (WIDTH // 2 + 100 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
+                elif (WIDTH // 2 + 120 <= mouse_pos[0] <= WIDTH // 2 + 140 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index + 1) % len(version_names)
 
