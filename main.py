@@ -118,7 +118,6 @@ def draw_color_box(x, y, color, selected):
     pygame.draw.rect(screen, fill_color, inner_rect, border_radius=10)  # Inner color
 
 def draw_triangle(x, y, direction):
-    """Draws a triangle."""
     if direction == "left":
         points = [(x, y), (x + 20, y - 10), (x + 20, y + 10)]
     else:
@@ -126,23 +125,18 @@ def draw_triangle(x, y, direction):
     pygame.draw.polygon(screen, WHITE, points)
 
 def draw_version_selection():
-    """Draws the version selection section."""
     global current_version_index
     
-    # Position for the version text and triangles
-    triangle_y = HEIGHT // 2 + 140  # Position below the color boxes
-    triangle_x = WIDTH // 2 - 120  # X position for left triangle (adjusted for alignment)
+    triangle_y = HEIGHT // 2 + 140  
+    triangle_x = WIDTH // 2 - 130  
 
-    # Draw left triangle
     draw_triangle(triangle_x, triangle_y, "left")
     
-    # Display current version
     version_surface = button_font.render(version_names[current_version_index], True, WHITE)
-    version_rect = version_surface.get_rect(center=(WIDTH // 2, triangle_y + 30))  # Adjusted for vertical alignment
+    version_rect = version_surface.get_rect(center=(WIDTH // 2, triangle_y))
     screen.blit(version_surface, version_rect)
 
-    # Draw right triangle
-    draw_triangle(triangle_x + 240, triangle_y, "right")  # Adjusted for spacing
+    draw_triangle(triangle_x + 260, triangle_y, "right") 
 
 def play_screen():
     global current_screen
@@ -183,7 +177,7 @@ def main():
                     selected_color = "black"  # Select black
 
                 # Check triangle clicks for version selection
-                if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 100 and 
+                if (WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index - 1) % len(version_names)
                 elif (WIDTH // 2 + 120 <= mouse_pos[0] <= WIDTH // 2 + 140 and 
