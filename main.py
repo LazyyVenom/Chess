@@ -25,7 +25,7 @@ ANIMATION_SPEED = 0.05
 
 current_screen = "main_menu"
 
-button_scales = {"Play": 1.0, "Instructions": 1.0, "Code": 1.0, "Back": 1.0, "New Button": 1.0}
+button_scales = {"Play": 1.0, "Instructions": 1.0, "Code": 1.0, "Back": 1.0, "Start Button": 1.0}
 code_button_clicked = False
 
 selected_color = "white"  
@@ -142,7 +142,12 @@ def play_screen():
     
     draw_back_button()
 
-    draw_button("New Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, None)
+    draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
+
+def game_screen():
+    global current_screen
+    current_screen = "game"
+    screen.fill(BLACK)
 
 def main():
     global current_screen, selected_color, current_version_index
@@ -176,6 +181,8 @@ def main():
             play_screen()
         elif current_screen == "instructions_screen":
             instructions_screen()
+        elif current_screen == "game":
+            game_screen()
         
         pygame.display.flip()
 
