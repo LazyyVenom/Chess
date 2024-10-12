@@ -2,30 +2,43 @@ import pygame
 import sys
 import webbrowser
 
+# Initialize Pygame
 pygame.init()
 
+# Screen settings
 WIDTH, HEIGHT = 1000, 600 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("DeadFish")
 
+# Colors (dark theme)
 DARK_GRAY = (30, 30, 30)
 BLACK = (0, 0, 0)
 BLUE = (0, 102, 204)
 LIGHT_BLUE = (100, 149, 237)
 WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)  # Change selected color to green
 SHADOW_COLOR = (50, 50, 50)
 
+# Font
 title_font = pygame.font.Font(None, 100)  
 button_font = pygame.font.Font(None, 48)
 
+# Button settings
 BUTTON_WIDTH, BUTTON_HEIGHT = 250, 60
 HOVER_SCALE = 1.05  
 ANIMATION_SPEED = 0.05
 
+# Screen management
 current_screen = "main_menu"
 
+# Track button scales for animation
 button_scales = {"Play": 1.0, "Instructions": 1.0, "Code": 1.0, "Back": 1.0}
 code_button_clicked = False
+
+# Global variables to store selected color and version
+selected_color = "white"  # Default selected color set to white
+version_names = ["DeadFish V1", "DeadFish V2", "DeadFish V3"]
+current_version_index = 0  # Default index for version names
 
 def draw_button(text, x, y, action=None):
     global button_scales, code_button_clicked
@@ -82,7 +95,6 @@ def main_menu():
     draw_button("Instructions", WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + 50, instructions_screen)
     draw_button("Code", WIDTH // 2 - BUTTON_WIDTH // 2, HEIGHT // 2 + 150, open_github)
 
-
 def instructions_screen():
     global current_screen
     current_screen = "instructions_screen"
@@ -94,8 +106,64 @@ def instructions_screen():
     
     draw_back_button()
 
-def main():
+def draw_color_box(x, y, color, selected):
+    """Draws a color box with a border if selected."""
+    box_rect = pygame.Rect(x, y, 100, 100)
+    
+    # Border color (green if selected, black otherwise)
+    border_color = GREEN if selected else BLACK
+    pygame.draw.rect(screen, border_color, box_rect, border_radius=10)  # Border
+    fill_color = WHITE if color == "white" else BLACK
+    inner_rect = box_rect.inflate(-10, -10)
+    pygame.draw.rect(screen, fill_color, inner_rect, border_radius=10)  # Inner color
+
+def draw_triangle(x, y, direction):
+    """Draws a triangle."""
+    if direction == "left":
+        points = [(x, y), (x + 20, y - 10), (x + 20, y + 10)]
+    else:
+        points = [(x, y), (x - 20, y - 10), (x - 20, y + 10)]
+    pygame.draw.polygon(screen, WHITE, points)
+
+def draw_version_selection():
+    """Draws the version selection section."""
+    global current_version_index
+    
+    # Position for the version text and triangles
+    triangle_y = HEIGHT // 2 + 140  # Position below the color boxes
+    triangle_x = WIDTH // 2 - 100  # X position for left triangle
+    
+    # Draw left triangle
+    draw_triangle(triangle_x, triangle_y, "left")
+    
+    # Display current version
+    version_surface = button_font.render(version_names[current_version_index], True, WHITE)
+    version_rect = version_surface.get_rect(center=(WIDTH // 2, triangle_y + 30))  # Adjusted for vertical alignment
+    screen.blit(version_surface, version_rect)
+
+    # Draw right triangle
+    draw_triangle(triangle_x + 200, triangle_y, "right")
+
+def play_screen():
     global current_screen
+    current_screen = "play_screen"
+    screen.fill(DARK_GRAY)
+
+    title_surface = title_font.render("Play With", True, WHITE)
+    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+    screen.blit(title_surface, title_rect)
+
+    # Draw color boxes
+    draw_color_box(WIDTH // 2 - 120, HEIGHT // 2 - 50, "white", selected_color == "white")
+    draw_color_box(WIDTH // 2 + 20, HEIGHT // 2 - 50, "black", selected_color == "black")
+
+    # Draw version selection
+    draw_version_selection()
+
+    draw_back_button() 
+
+def main():
+    global current_screen, selected_color, current_version_index
     running = True
     while running:
         screen.fill(DARK_GRAY)
@@ -103,6 +171,26 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = event.pos
+                
+                # Check color box selection
+                if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
+                        HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
+                    selected_color = "white"  # Select white
+                elif (WIDTH // 2 + 20 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
+                        HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
+                    selected_color = "black"  # Select black
+
+                # Check triangle clicks for version selection
+                if (WIDTH // 2 - 100 <= mouse_pos[0] <= WIDTH // 2 - 80 and 
+                        HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
+                    current_version_index = (current_version_index - 1) % len(version_names)
+                elif (WIDTH // 2 + 100 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
+                        HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
+                    current_version_index = (current_version_index + 1) % len(version_names)
+
+        # Display the current screen
         if current_screen == "main_menu":
             main_menu()
         elif current_screen == "play_screen":
@@ -112,6 +200,7 @@ def main():
         
         pygame.display.flip()
 
+# Run the game
 if __name__ == "__main__":
     main()
     pygame.quit()
