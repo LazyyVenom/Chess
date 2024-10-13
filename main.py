@@ -148,6 +148,7 @@ def game_screen():
     global current_screen
     current_screen = "game"
     screen.fill(BLACK)
+    
 
 def main():
     global current_screen, selected_color, current_version_index
