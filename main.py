@@ -165,8 +165,8 @@ from board_utils import draw_board
 def game_screen():
     global current_screen
     current_screen = "game"
-    screen.fill(BLACK)
-    draw_board(screen,[])    
+    screen.fill(DARK_GRAY)
+    draw_board(screen,[]) 
     
 
 def main():
