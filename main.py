@@ -166,7 +166,7 @@ def game_screen():
     global current_screen
     current_screen = "game"
     screen.fill(BLACK)
-    
+    draw_board(screen,[])    
     
 
 def main():
