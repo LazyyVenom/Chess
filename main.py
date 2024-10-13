@@ -28,7 +28,7 @@ current_screen = "main_menu"
 button_scales = {"Play": 1.0, "Instructions": 1.0, "Code": 1.0, "Back": 1.0, "Start Button": 1.0}
 code_button_clicked = False
 
-selected_color = "white"  
+selected_color = "white"
 version_names = ["DeadFish V1", "DeadFish V2", "DeadFish V3"]
 current_version_index = 0  
 
@@ -164,9 +164,11 @@ from board_utils import draw_board
 
 def game_screen():
     global current_screen
+    print()
     current_screen = "game"
     screen.fill(DARK_GRAY)
-    draw_board(screen,[]) 
+    draw_board(screen,[])
+
     
 
 def main():
