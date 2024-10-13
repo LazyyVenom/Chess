@@ -144,6 +144,13 @@ def play_screen():
 
     draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
 
+player = 'w'
+opponent = 'b'
+
+board = [
+    ['{player}r'],
+    ]
+
 def game_screen():
     global current_screen
     current_screen = "game"
