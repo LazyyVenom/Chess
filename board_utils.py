@@ -5,7 +5,7 @@ LIGHT_BLUE = (230, 247, 255)
 HIGHLIGHT_COLOR1 = (255, 179, 179)
 HIGHLIGHT_COLOR2 = (255, 102, 102)
 PIECE_PLACEMENT_COLOR = (102, 153, 255)
-SQUARE_SIZE = 50
+SQUARE_SIZE = 75
 
 def draw_board(window, highlights,selected=None):
     colors = [LIGHT_BLUE, DARK_BLUE]
