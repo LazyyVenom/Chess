@@ -16,6 +16,9 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)  
 SHADOW_COLOR = (50, 50, 50)
 
+player = 'w'
+opp = 'b'
+
 title_font = pygame.font.Font(None, 100)  
 button_font = pygame.font.Font(None, 48)
 
@@ -144,35 +147,31 @@ def play_screen():
 
     draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
 
-player = 'w'
-opp = 'b'
-
 board = [
-    ['{player}r','{player}n','{player}b','{player}k','{player}q','{player}b','{player}k','{player}r'],
-    ['{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p'],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p'],
     ['{opp}r','{opp}n','{opp}b','{opp}k','{opp}q','{opp}b','{opp}n','{opp}r'],
+    ['{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p'],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p'],
+    ['{player}r','{player}n','{player}b','{player}k','{player}q','{player}b','{player}k','{player}r'],
     ]
 
-from board_utils import draw_board
+from board_utils import draw_board, draw_players_info
 
 def game_screen():
     global current_screen
-    print()
     current_screen = "game"
     screen.fill(DARK_GRAY)
     draw_board(screen,[])
-
+    draw_players_info()
     
 
 def main():
-    global current_screen, selected_color, current_version_index
+    global current_screen, selected_color, current_version_index, player, opp
     running = True
     while running:
         screen.fill(DARK_GRAY)
@@ -186,13 +185,19 @@ def main():
                 if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
                         HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
                     selected_color = "white"
+                    player = 'w'
+                    opp = 'b'
+
                 elif (WIDTH // 2 + 20 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
                         HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
                     selected_color = "black"
+                    player = 'b'
+                    opp = 'w'
 
                 if (WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index - 1) % len(version_names)
+
                 elif (WIDTH // 2 + 110 <= mouse_pos[0] <= WIDTH // 2 + 130 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index + 1) % len(version_names)

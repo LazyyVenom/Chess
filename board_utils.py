@@ -20,3 +20,6 @@ def draw_board(window, highlights,selected=None):
                 color = PIECE_PLACEMENT_COLOR
 
             pygame.draw.rect(window, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+
+def draw_players_info(selected_color,selected_version):
+    pass
