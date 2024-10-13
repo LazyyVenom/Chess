@@ -160,10 +160,13 @@ board = [
     ['{opp}r','{opp}n','{opp}b','{opp}k','{opp}q','{opp}b','{opp}n','{opp}r'],
     ]
 
+from board_utils import draw_board
+
 def game_screen():
     global current_screen
     current_screen = "game"
     screen.fill(BLACK)
+    
     
 
 def main():
