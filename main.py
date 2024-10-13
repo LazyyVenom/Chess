@@ -145,10 +145,19 @@ def play_screen():
     draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
 
 player = 'w'
-opponent = 'b'
+opp = 'b'
 
 board = [
-    ['{player}r'],
+    ['{player}r','{player}n','{player}b','{player}k','{player}q','{player}b','{player}k','{player}r'],
+    ['{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p'],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p'],
+    ['{opp}r','{opp}n','{opp}b','{opp}k','{opp}q','{opp}b','{opp}n','{opp}r'],
     ]
 
 def game_screen():
