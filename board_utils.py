@@ -26,4 +26,5 @@ def draw_players_info(screen,selected_color: str,selected_version: str):
     logo = pygame.image.load(f"assets/{selected_color}k.png")
     logo = pygame.transform.scale(logo, (100, 100))
 
-    screen.blit(player_info_font_primary.render("Player", True, (255, 255, 255)),(700,400))
+    screen.blit(logo, (650, 400))
+    screen.blit(player_info_font_primary.render("Player", True, (255, 255, 255)),(750,435))
