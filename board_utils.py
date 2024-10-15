@@ -21,5 +21,8 @@ def draw_board(window, highlights,selected=None):
 
             pygame.draw.rect(window, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
-def draw_players_info(selected_color,selected_version):
-    pass
+def draw_players_info(selected_color: str,selected_version: str):
+    if selected_color == 'w':
+        pass
+    else:
+        pass

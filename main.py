@@ -168,7 +168,7 @@ def game_screen():
     current_screen = "game"
     screen.fill(DARK_GRAY)
     draw_board(screen,[])
-    draw_players_info()
+    draw_players_info(player,version_names[current_version_index])
     
 
 def main():
