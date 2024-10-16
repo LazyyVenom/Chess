@@ -160,7 +160,6 @@ board = [
     ['{player}r','{player}n','{player}b','{player}k','{player}q','{player}b','{player}k','{player}r'],
     ]
 
-
 from board_utils import draw_board, draw_players_info
 
 def game_screen():
