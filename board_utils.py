@@ -33,3 +33,7 @@ def draw_players_info(screen,selected_color: str,selected_version: str):
     
     screen.blit(logo, (620, 400))
     screen.blit(player_info_font_primary.render("Player", True, (255, 255, 255)),(750,460))
+
+
+def draw_pieces(screen,board):
+    pass
