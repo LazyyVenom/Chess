@@ -1,3 +1,4 @@
+from typing import List
 import pygame
 
 DARK_BLUE = (0, 105, 153)
@@ -35,5 +36,5 @@ def draw_players_info(screen,selected_color: str,selected_version: str):
     screen.blit(player_info_font_primary.render("Player", True, (255, 255, 255)),(750,460))
 
 
-def draw_pieces(screen,board):
+def draw_pieces(screen,board: List[list[str]]):
     pass
