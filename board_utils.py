@@ -38,4 +38,3 @@ def draw_players_info(screen,selected_color: str,selected_version: str):
 
 def draw_pieces(screen,board: List[list[str]]):
     pass
-    
