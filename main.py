@@ -170,6 +170,7 @@ def game_screen():
     draw_players_info(screen,player,version_names[current_version_index])
     
 
+
 def main():
     global current_screen, selected_color, current_version_index, player, opp
     running = True
