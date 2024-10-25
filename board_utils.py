@@ -8,6 +8,10 @@ HIGHLIGHT_COLOR2 = (255, 102, 102)
 PIECE_PLACEMENT_COLOR = (102, 153, 255)
 SQUARE_SIZE = 75
 player_info_font_primary = pygame.font.Font(None, 50)
+
+def load_images():
+    pass
+
 images = load_images()
 
 def draw_board(window, highlights,selected=None):
@@ -36,8 +40,6 @@ def draw_players_info(screen,selected_color: str,selected_version: str):
     screen.blit(logo, (620, 400))
     screen.blit(player_info_font_primary.render("Player", True, (255, 255, 255)),(750,460))
 
-def load_images():
-    pass
 
 def draw_pieces(screen,board: List[list[str]]):
     for row in range(8):
