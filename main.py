@@ -148,19 +148,19 @@ def play_screen():
     draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
 
 board = [
-    ['{opp}r','{opp}n','{opp}b','{opp}k','{opp}q','{opp}b','{opp}n','{opp}r'],
-    ['{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p','{opp}p'],
+    [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
+    [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
     ['--','--','--','--','--','--','--','--',],
     ['--','--','--','--','--','--','--','--',],
     ['--','--','--','--','--','--','--','--',],
     ['--','--','--','--','--','--','--','--',],
     ['--','--','--','--','--','--','--','--',],
     ['--','--','--','--','--','--','--','--',],
-    ['{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p','{player}p'],
-    ['{player}r','{player}n','{player}b','{player}k','{player}q','{player}b','{player}k','{player}r'],
+    [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
+    [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
     ]
 
-from board_utils import draw_board, draw_players_info
+from board_utils import draw_board, draw_players_info, draw_pieces
 
 def game_screen():
     global current_screen
@@ -168,7 +168,7 @@ def game_screen():
     screen.fill(DARK_GRAY)
     draw_board(screen,[])
     draw_players_info(screen,player,version_names[current_version_index])
-    
+    draw_pieces(screen,board)
     
 
 def main():
