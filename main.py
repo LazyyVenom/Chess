@@ -147,7 +147,18 @@ def play_screen():
 
     draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
 
-board = [[]]
+board = [
+    [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
+    [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    ['--','--','--','--','--','--','--','--',],
+    [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
+    [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+    ]
 
 from board_utils import draw_board, draw_players_info, draw_pieces
 
@@ -161,7 +172,7 @@ def game_screen():
     
 
 def main():
-    global current_screen, selected_color, current_version_index, player, opp
+    global current_screen, selected_color, current_version_index, player, opp, board
     running = True
     while running:
         screen.fill(DARK_GRAY)
@@ -171,7 +182,7 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
-                
+
                 if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
                         HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
                     selected_color = "white"
