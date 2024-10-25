@@ -10,7 +10,11 @@ SQUARE_SIZE = 75
 player_info_font_primary = pygame.font.Font(None, 50)
 
 def load_images():
-    pass
+    pieces = ['wp', 'wr', 'wn', 'wb', 'wq', 'wk', 'bp', 'br', 'bn', 'bb', 'bq', 'bk']
+    images = {}
+    for piece in pieces:
+        images[piece] = pygame.transform.scale(pygame.image.load(f'assets/{piece}.png'), (SQUARE_SIZE, SQUARE_SIZE))
+    return images
 
 images = load_images()
 
