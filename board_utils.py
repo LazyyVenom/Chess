@@ -18,11 +18,11 @@ def load_images():
 
 images = load_images()
 
-def draw_board(window, highlights,selected=None):
+def draw_board(window, valid_moves,selected=None):
     colors = [LIGHT_BLUE, DARK_BLUE]
     for row in range(8):
         for col in range(8):
-            if (row, col) in highlights:
+            if (row, col) in valid_moves:
                 color = [HIGHLIGHT_COLOR1,HIGHLIGHT_COLOR2][(row + col) % 2]
             else:
                 color = colors[(row + col) % 2]
@@ -52,3 +52,7 @@ def draw_pieces(screen,board: List[list[str]]):
 
             if piece != '--':
                 screen.blit(images[piece], (col * SQUARE_SIZE, row * SQUARE_SIZE))
+
+
+def move_pieces(board: List[list[str]], valid_moves: list):
+    pass
