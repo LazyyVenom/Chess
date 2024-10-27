@@ -54,5 +54,5 @@ def draw_pieces(screen,board: List[list[str]]):
                 screen.blit(images[piece], (col * SQUARE_SIZE, row * SQUARE_SIZE))
 
 
-def move_pieces(board: List[list[str]], valid_moves: list):
+def move_piece(board: List[list[str]], valid_moves: list):
     pass
