@@ -118,7 +118,7 @@ def draw_triangle(x, y, direction):
 
 def draw_version_selection():
     global current_version_index
-    triangle_y = HEIGHT // 2 + 140  
+    triangle_y = HEIGHT // 2 + 140 
     triangle_x = WIDTH // 2 - 130  
 
     draw_triangle(triangle_x, triangle_y, "left")
