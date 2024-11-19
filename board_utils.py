@@ -60,4 +60,3 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple):
 
 def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
     pass
-
