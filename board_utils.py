@@ -54,7 +54,6 @@ def draw_pieces(screen,board: List[list[str]]):
                 screen.blit(images[piece], (col * SQUARE_SIZE, row * SQUARE_SIZE))
 
 
-
 def valid_move_decider(board: List[list[str]], piece_cord: tuple):
     pass
 
