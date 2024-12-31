@@ -7,6 +7,7 @@ HIGHLIGHT_COLOR1 = (255, 179, 179)
 HIGHLIGHT_COLOR2 = (255, 102, 102)
 PIECE_PLACEMENT_COLOR = (102, 153, 255)
 SQUARE_SIZE = 75
+pygame.font.init()
 player_info_font_primary = pygame.font.Font(None, 50)
 
 def load_images():
@@ -59,5 +60,6 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple):
 
 
 def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
-    pass
+    board[original_pos[0]][original_pos[1]] = board[new_pos[0]][new_pos[1]]
+    return board
 

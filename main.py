@@ -1,6 +1,7 @@
 import pygame
 import sys
 import webbrowser
+from board_utils import *
 
 pygame.init()
 
@@ -15,6 +16,7 @@ LIGHT_BLUE = (100, 149, 237)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)  
 SHADOW_COLOR = (50, 50, 50)
+SQUARE_SIZE = 100
 
 player = 'w'
 opp = 'b'
@@ -148,17 +150,15 @@ def play_screen():
     draw_button("Start Button", WIDTH - BUTTON_WIDTH - 20, HEIGHT - BUTTON_HEIGHT - 20, game_screen)
 
 board = [
-    [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
-    [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    ['--','--','--','--','--','--','--','--',],
-    [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-    [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+        [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
+        [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
+        ['--','--','--','--','--','--','--','--',],
+        ['--','--','--','--','--','--','--','--',],
+        ['--','--','--','--','--','--','--','--',],
+        ['--','--','--','--','--','--','--','--',],
+        [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
+        [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
     ]
-
-from board_utils import draw_board, draw_players_info, draw_pieces
 
 def game_screen():
     global current_screen
@@ -167,7 +167,36 @@ def game_screen():
     draw_board(screen,[])
     draw_players_info(screen,player,version_names[current_version_index])
     draw_pieces(screen,board)
-    
+    selected_piece = None
+    valid_moves = []
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+            col = mouse_pos[0] // SQUARE_SIZE
+            row = mouse_pos[1] // SQUARE_SIZE
+
+            if selected_piece:
+                if (row, col) in valid_moves:
+                    move_piece(board, selected_piece, (row, col))
+                    selected_piece = None
+                    valid_moves = []
+                else:
+                    selected_piece = None
+                    valid_moves = []
+            else:
+                piece = board[row][col]
+                if piece != '--' and ((player == 'w' and piece[0] == 'w') or (player == 'b' and piece[0] == 'b')):
+                    selected_piece = (row, col)
+                    valid_moves = valid_move_decider(board, selected_piece)
+
+    draw_board(screen, valid_moves, selected_piece)
+    draw_pieces(screen, board)
+
 
 def main():
     global current_screen, selected_color, current_version_index, player, opp, board
