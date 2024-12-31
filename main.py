@@ -16,7 +16,7 @@ LIGHT_BLUE = (100, 149, 237)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)  
 SHADOW_COLOR = (50, 50, 50)
-SQUARE_SIZE = 100
+SQUARE_SIZE = 75
 
 player = 'w'
 opp = 'b'
