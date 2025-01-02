@@ -1,5 +1,6 @@
 from typing import List
 import pygame
+from valid_moves_check import Valid_Moves
 
 DARK_BLUE = (0, 105, 153)
 LIGHT_BLUE = (230, 247, 255)
@@ -58,9 +59,13 @@ def draw_pieces(screen,board: List[list[str]]):
 def valid_move_decider(board: List[list[str]], piece_cord: tuple):
     valid_moves = []
 
-    print(piece_cord)
-    print(board[piece_cord[0]][piece_cord[1]])
-    
+    piece = board[piece_cord[0]][piece_cord[1]]
+
+    print(piece, piece_cord)
+
+    if piece[1] == 'p':
+        valid_moves = Valid_Moves.check_pawn(board, piece_cord, piece[0])
+
     return valid_moves
 
 

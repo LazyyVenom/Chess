@@ -161,14 +161,17 @@ board = [
     ]
 
 def game_screen():
-    global current_screen
-    current_screen = "game"
+    global selected_piece, valid_moves
+    
+    if 'selected_piece' not in globals():
+        selected_piece = None
+    if 'valid_moves' not in globals():
+        valid_moves = []
+
     screen.fill(DARK_GRAY)
-    draw_board(screen,[])
-    draw_players_info(screen,player,version_names[current_version_index])
-    draw_pieces(screen,board)
-    selected_piece = None
-    valid_moves = []
+    draw_board(screen, valid_moves)
+    draw_players_info(screen, player, version_names[current_version_index])
+    draw_pieces(screen, board)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -200,7 +203,12 @@ def game_screen():
 
 def main():
     global current_screen, selected_color, current_version_index, player, opp, board
+    global selected_piece, valid_moves
+
+    selected_piece = None 
+    valid_moves = []    
     running = True
+
     while running:
         screen.fill(DARK_GRAY)
         for event in pygame.event.get():
