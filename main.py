@@ -161,8 +161,10 @@ board = [
     ]
 
 def game_screen():
-    global selected_piece, valid_moves
-    
+    global selected_piece, valid_moves, current_screen
+
+    current_screen = "game"
+
     if 'selected_piece' not in globals():
         selected_piece = None
     if 'valid_moves' not in globals():
@@ -196,9 +198,6 @@ def game_screen():
                 if piece != '--' and ((player == 'w' and piece[0] == 'w') or (player == 'b' and piece[0] == 'b')):
                     selected_piece = (row, col)
                     valid_moves = valid_move_decider(board, selected_piece)
-
-    draw_board(screen, valid_moves, selected_piece)
-    draw_pieces(screen, board)
 
 
 def main():
@@ -246,14 +245,14 @@ def main():
             instructions_screen()
         elif current_screen == "game":
             board = [
-                [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
-                [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
-                ['--','--','--','--','--','--','--','--',],
-                ['--','--','--','--','--','--','--','--',],
-                ['--','--','--','--','--','--','--','--',],
-                ['--','--','--','--','--','--','--','--',],
-                [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-                [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+                    [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
+                    [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
+                    ['--','--','--','--','--','--','--','--',],
+                    ['--','--','--','--','--','--','--','--',],
+                    ['--','--','--','--','--','--','--','--',],
+                    ['--','--','--','--','--','--','--','--',],
+                    [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
+                    [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
                 ]
             game_screen()
         

@@ -4,7 +4,7 @@ class Valid_Moves:
     @staticmethod
     def check_pawn(board, coords, player):
         piece_color = board[coords[0]][coords[1]][0]
-        if player == piece_color == 'w' and coords[0] == 6:
+        if player == piece_color:
             if coords[0] == 6:
                 if board[coords[0] - 1][coords[1]] == '--':
                     return [(coords[0] - 1, coords[1]), (coords[0] - 2, coords[1])]
