@@ -57,6 +57,9 @@ def draw_pieces(screen,board: List[list[str]]):
 
 def valid_move_decider(board: List[list[str]], piece_cord: tuple):
     valid_moves = []
+
+    print(piece_cord)
+    print(board[piece_cord[0]][piece_cord[1]])
     
     return valid_moves
 
