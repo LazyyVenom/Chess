@@ -161,13 +161,14 @@ board = [
     ]
 
 def game_screen():
-    global selected_piece, valid_moves, current_screen
+    global selected_piece, valid_moves, current_screen, board
 
     current_screen = "game"
 
     if 'selected_piece' not in globals():
         selected_piece = None
     if 'valid_moves' not in globals():
+        print("Not Present")
         valid_moves = []
 
     screen.fill(DARK_GRAY)
@@ -187,7 +188,8 @@ def game_screen():
 
             if selected_piece:
                 if (row, col) in valid_moves:
-                    move_piece(board, selected_piece, (row, col))
+                    print("HERE" ,selected_piece, (row, col))
+                    board = move_piece(board, selected_piece, (row, col))
                     selected_piece = None
                     valid_moves = []
                 else:
@@ -207,6 +209,17 @@ def main():
     selected_piece = None 
     valid_moves = []    
     running = True
+
+    board = [
+                [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
+                [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
+                ['--','--','--','--','--','--','--','--',],
+                ['--','--','--','--','--','--','--','--',],
+                ['--','--','--','--','--','--','--','--',],
+                ['--','--','--','--','--','--','--','--',],
+                [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
+                [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+            ]
 
     while running:
         screen.fill(DARK_GRAY)
@@ -244,16 +257,6 @@ def main():
         elif current_screen == "instructions_screen":
             instructions_screen()
         elif current_screen == "game":
-            board = [
-                    [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
-                    [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
-                    ['--','--','--','--','--','--','--','--',],
-                    ['--','--','--','--','--','--','--','--',],
-                    ['--','--','--','--','--','--','--','--',],
-                    ['--','--','--','--','--','--','--','--',],
-                    [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-                    [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
-                ]
             game_screen()
         
         pygame.display.flip()

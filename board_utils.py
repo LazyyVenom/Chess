@@ -70,6 +70,7 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple):
 
 
 def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
-    board[original_pos[0]][original_pos[1]] = board[new_pos[0]][new_pos[1]]
+    board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
+    board[original_pos[0]][original_pos[1]] = '--'
     return board
 
