@@ -12,18 +12,23 @@ class Valid_Moves:
                     return [(coords[0] - 1, coords[1])]
         else:
             pass
-
+    
+    @staticmethod
     def check_knight(board, coords, player):
         pass
     
+    @staticmethod
     def check_king(board, coords, player):
         pass
 
+    @staticmethod
     def check_queen(board, coords, player):
         pass
 
+    @staticmethod
     def check_rook(board, coords, player):
         pass
 
+    @staticmethod
     def check_bishop(board, coords, player):
         pass
