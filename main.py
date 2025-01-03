@@ -201,7 +201,6 @@ def game_screen():
                     selected_piece = (row, col)
                     valid_moves = valid_move_decider(board, selected_piece)
 
-
 def main():
     global current_screen, selected_color, current_version_index, player, opp, board
     global selected_piece, valid_moves
