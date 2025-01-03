@@ -209,17 +209,6 @@ def main():
     valid_moves = []    
     running = True
 
-    board = [
-                [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
-                [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
-                ['--','--','--','--','--','--','--','--',],
-                ['--','--','--','--','--','--','--','--',],
-                ['--','--','--','--','--','--','--','--',],
-                ['--','--','--','--','--','--','--','--',],
-                [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-                [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
-            ]
-
     while running:
         screen.fill(DARK_GRAY)
         for event in pygame.event.get():
@@ -248,6 +237,17 @@ def main():
                 elif (WIDTH // 2 + 110 <= mouse_pos[0] <= WIDTH // 2 + 130 and 
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index + 1) % len(version_names)
+   
+            board = [
+                [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
+                [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
+                ['--','--','--','--','--','--','--','--',],
+                ['--','--','--','--','--','--','--','--',],
+                ['--','--','--','--','--','--','--','--',],
+                ['--','--','--','--','--','--','--','--',],
+                [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
+                [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+            ]
 
         if current_screen == "main_menu":
             main_menu()
