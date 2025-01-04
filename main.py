@@ -157,7 +157,7 @@ board = [
         ['--','--','--','--','--','--','--','--',],
         ['--','--','--','--','--','--','--','--',],
         [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-        [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+        [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}n',f'{player}r'],
     ]
 
 def game_screen():
@@ -168,7 +168,6 @@ def game_screen():
     if 'selected_piece' not in globals():
         selected_piece = None
     if 'valid_moves' not in globals():
-        print("Not Present")
         valid_moves = []
 
     screen.fill(DARK_GRAY)
@@ -188,7 +187,6 @@ def game_screen():
 
             if selected_piece:
                 if (row, col) in valid_moves:
-                    print("HERE" ,selected_piece, (row, col))
                     board = move_piece(board, selected_piece, (row, col))
                     selected_piece = None
                     valid_moves = []
@@ -238,7 +236,8 @@ def main():
                         HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                     current_version_index = (current_version_index + 1) % len(version_names)
    
-                if screen != "game":
+                if current_screen != "game":
+                    print("RESET BOARD when screen = ",current_screen)
                     board = [
                         [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
                         [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
@@ -247,7 +246,7 @@ def main():
                         ['--','--','--','--','--','--','--','--',],
                         ['--','--','--','--','--','--','--','--',],
                         [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-                        [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}k',f'{player}r'],
+                        [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}n',f'{player}r'],
                     ]
 
         if current_screen == "main_menu":

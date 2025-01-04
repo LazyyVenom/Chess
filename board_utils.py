@@ -61,10 +61,18 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple):
 
     piece = board[piece_cord[0]][piece_cord[1]]
 
-    print(piece, piece_cord)
-
     if piece[1] == 'p':
         valid_moves = Valid_Moves.check_pawn(board, piece_cord, piece[0])
+    elif piece[1] == 'r':
+        valid_moves = Valid_Moves.check_rook(board, piece_cord, piece[0])
+    elif piece[1] == 'n':
+        valid_moves = Valid_Moves.check_knight(board, piece_cord, piece[0])
+    elif piece[1] == 'b':
+        valid_moves = Valid_Moves.check_bishop(board, piece_cord, piece[0])
+    elif piece[1] == 'q':
+        valid_moves = Valid_Moves.check_queen(board, piece_cord, piece[0])
+    elif piece[1] == 'k':
+        valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0])
 
     return valid_moves
 
