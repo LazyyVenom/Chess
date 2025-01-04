@@ -8,7 +8,7 @@ class Valid_Moves:
         possible_moves = []
 
         if player != piece_color:
-            return possible_moves
+            return possible_moves 
     
         if board[coords[0] - 1][coords[1]] == '--':
             possible_moves.append((coords[0] - 1, coords[1]))
