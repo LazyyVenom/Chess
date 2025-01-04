@@ -106,6 +106,9 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
+        possible_moves += Valid_Moves.check_rook(board, coords, player)
+        possible_moves += Valid_Moves.check_bishop(board, coords, player)
+        
         return possible_moves
 
     @staticmethod
