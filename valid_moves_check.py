@@ -116,6 +116,38 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
+        if coords[0] - 1 >= 0:
+            for i in range(coords[0] - 1, -1, -1):
+                if board[i][coords[1]][0] == player:
+                    break
+                possible_moves.append((i, coords[1]))
+                if board[i][coords[1]][0] != '--':
+                    break
+        
+        if coords[0] + 1 < 8:
+            for i in range(coords[0] + 1, 8):
+                if board[i][coords[1]][0] == player:
+                    break
+                possible_moves.append((i, coords[1]))
+                if board[i][coords[1]][0] != '--':
+                    break
+        
+        if coords[1] - 1 >= 0:
+            for i in range(coords[1] - 1, -1, -1):
+                if board[coords[0]][i][0] == player:
+                    break
+                possible_moves.append((coords[0], i))
+                if board[coords[0]][i][0] != '--':
+                    break
+        
+        if coords[1] + 1 < 8:
+            for i in range(coords[1] + 1, 8):
+                if board[coords[0]][i][0] == player:
+                    break
+                possible_moves.append((coords[0], i))
+                if board[coords[0]][i][0] != '--':
+                    break
+        
         return possible_moves
 
     @staticmethod
