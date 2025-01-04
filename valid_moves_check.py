@@ -45,6 +45,20 @@ class Valid_Moves:
             
             if coords[1] + 1 < 8 and board[coords[0] + 2][coords[1] + 1][0] != player:
                 possible_moves.append((coords[0] + 2, coords[1] + 1))
+        
+        if coords[1] - 2 >= 0:
+            if coords[0] - 1 >= 0 and board[coords[0] - 1][coords[1] - 2][0] != player:
+                possible_moves.append((coords[0] - 1, coords[1] - 2))
+            
+            if coords[0] + 1 < 8 and board[coords[0] + 1][coords[1] - 2][0] != player:
+                possible_moves.append((coords[0] + 1, coords[1] - 2))
+        
+        if coords[1] + 2 < 8:
+            if coords[0] - 1 >= 0 and board[coords[0] - 1][coords[1] + 2][0] != player:
+                possible_moves.append((coords[0] - 1, coords[1] + 2))
+            
+            if coords[0] + 1 < 8 and board[coords[0] + 1][coords[1] + 2][0] != player:
+                possible_moves.append((coords[0] + 1, coords[1] + 2))
 
         return possible_moves
     
