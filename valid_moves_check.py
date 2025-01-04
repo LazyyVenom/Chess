@@ -121,7 +121,7 @@ class Valid_Moves:
                 if board[i][coords[1]][0] == player:
                     break
                 possible_moves.append((i, coords[1]))
-                if board[i][coords[1]][0] != '--':
+                if board[i][coords[1]] != '--':
                     break
         
         if coords[0] + 1 < 8:
@@ -129,7 +129,7 @@ class Valid_Moves:
                 if board[i][coords[1]][0] == player:
                     break
                 possible_moves.append((i, coords[1]))
-                if board[i][coords[1]][0] != '--':
+                if board[i][coords[1]] != '--':
                     break
         
         if coords[1] - 1 >= 0:
@@ -137,7 +137,7 @@ class Valid_Moves:
                 if board[coords[0]][i][0] == player:
                     break
                 possible_moves.append((coords[0], i))
-                if board[coords[0]][i][0] != '--':
+                if board[coords[0]][i] != '--':
                     break
         
         if coords[1] + 1 < 8:
@@ -145,7 +145,7 @@ class Valid_Moves:
                 if board[coords[0]][i][0] == player:
                     break
                 possible_moves.append((coords[0], i))
-                if board[coords[0]][i][0] != '--':
+                if board[coords[0]][i] != '--':
                     break
         
         return possible_moves
@@ -157,5 +157,37 @@ class Valid_Moves:
         
         if player != piece_color:
             return possible_moves
+        
+        if coords[0] - 1 >= 0 and coords[1] - 1 >= 0:
+            for i in range(1, min(coords[0], coords[1]) + 1):
+                if board[coords[0] - i][coords[1] - i][0] == player:
+                    break
+                possible_moves.append((coords[0] - i, coords[1] - i))
+                if board[coords[0] - i][coords[1] - i] != '--':
+                    break
+        
+        if coords[0] - 1 >= 0 and coords[1] + 1 < 8:
+            for i in range(1, min(coords[0], 8 - coords[1])):
+                if board[coords[0] - i][coords[1] + i][0] == player:
+                    break
+                possible_moves.append((coords[0] - i, coords[1] + i))
+                if board[coords[0] - i][coords[1] + i] != '--':
+                    break
+        
+        if coords[0] + 1 < 8 and coords[1] - 1 >= 0:
+            for i in range(1, min(8 - coords[0], coords[1] + 1)):
+                if board[coords[0] + i][coords[1] - i][0] == player:
+                    break
+                possible_moves.append((coords[0] + i, coords[1] - i))
+                if board[coords[0] + i][coords[1] - i] != '--':
+                    break
+        
+        if coords[0] + 1 < 8 and coords[1] + 1 < 8:
+            for i in range(1, min(8 - coords[0], 8 - coords[1])):
+                if board[coords[0] + i][coords[1] + i][0] == player:
+                    break
+                possible_moves.append((coords[0] + i, coords[1] + i))
+                if board[coords[0] + i][coords[1] + i] != '--':
+                    break
         
         return possible_moves
