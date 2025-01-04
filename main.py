@@ -237,7 +237,6 @@ def main():
                     current_version_index = (current_version_index + 1) % len(version_names)
    
                 if current_screen != "game":
-                    print("RESET BOARD when screen = ",current_screen)
                     board = [
                         [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
                         [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
