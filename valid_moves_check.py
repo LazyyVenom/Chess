@@ -16,10 +16,10 @@ class Valid_Moves:
         if coords[0] == 6 and board[coords[0] - 2][coords[1]] == '--':
             possible_moves.append((coords[0] - 2, coords[1]))
         
-        if board[coords[0] - 1][coords[1] - 1][0] != player and board[coords[0] - 1][coords[1] - 1] != '--':
+        if -1 < coords[1] - 1 and board[coords[0] - 1][coords[1] - 1][0] != player and board[coords[0] - 1][coords[1] - 1] != '--':
             possible_moves.append((coords[0] - 1, coords[1] - 1))
         
-        if board[coords[0] - 1][coords[1] + 1][0] != player and board[coords[0] - 1][coords[1] + 1] != '--':
+        if coords[1] + 1 < 8 and board[coords[0] - 1][coords[1] + 1][0] != player and board[coords[0] - 1][coords[1] + 1] != '--':
             possible_moves.append((coords[0] - 1, coords[1] + 1))
         
         return possible_moves
