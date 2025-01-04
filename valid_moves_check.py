@@ -32,11 +32,21 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
-        if coords[0] - 2 >= 0 and coords[1] - 1 >= 0 and board[coords[0] - 2][coords[1] - 1][0] != player:
-            possible_moves.append((coords[0] - 2, coords[1] - 1))
+        if coords[0] - 2 >= 0:
+            if coords[1] - 1 >= 0 and board[coords[0] - 2][coords[1] - 1][0] != player:
+                possible_moves.append((coords[0] - 2, coords[1] - 1))
             
+            if coords[1] + 1 < 8 and board[coords[0] - 2][coords[1] + 1][0] != player:
+                possible_moves.append((coords[0] - 2, coords[1] + 1))
+            
+        if coords[0] + 2 < 8:
+            if coords[1] - 1 >= 0 and board[coords[0] + 2][coords[1] - 1][0] != player:
+                possible_moves.append((coords[0] + 2, coords[1] - 1))
+            
+            if coords[1] + 1 < 8 and board[coords[0] + 2][coords[1] + 1][0] != player:
+                possible_moves.append((coords[0] + 2, coords[1] + 1))
 
-        return []
+        return possible_moves
     
     @staticmethod
     def check_king(board: List[List[str]], coords: tuple, player: str):
@@ -46,7 +56,7 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
-        return []
+        return possible_moves
 
     @staticmethod
     def check_queen(board: List[List[str]], coords: tuple, player: str):
@@ -56,7 +66,7 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
-        return []
+        return possible_moves
 
     @staticmethod
     def check_rook(board: List[List[str]], coords: tuple, player: str):
@@ -66,7 +76,7 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
-        return []
+        return possible_moves
 
     @staticmethod
     def check_bishop(board: List[List[str]], coords: tuple, player: str):
@@ -76,4 +86,4 @@ class Valid_Moves:
         if player != piece_color:
             return possible_moves
         
-        return []
+        return possible_moves
