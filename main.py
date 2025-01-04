@@ -185,6 +185,9 @@ def game_screen():
             col = mouse_pos[0] // SQUARE_SIZE
             row = mouse_pos[1] // SQUARE_SIZE
 
+            if col > 7 or row > 7:
+                continue
+
             if selected_piece:
                 if (row, col) in valid_moves:
                     board = move_piece(board, selected_piece, (row, col))
@@ -216,27 +219,27 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
 
-                if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
-                        HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
-                    selected_color = "white"
-                    player = 'w'
-                    opp = 'b'
-
-                elif (WIDTH // 2 + 20 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
-                        HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
-                    selected_color = "black"
-                    player = 'b'
-                    opp = 'w'
-
-                if (WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105 and 
-                        HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
-                    current_version_index = (current_version_index - 1) % len(version_names)
-
-                elif (WIDTH // 2 + 110 <= mouse_pos[0] <= WIDTH // 2 + 130 and 
-                        HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
-                    current_version_index = (current_version_index + 1) % len(version_names)
-   
                 if current_screen != "game":
+                    if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
+                            HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
+                        selected_color = "white"
+                        player = 'w'
+                        opp = 'b'
+
+                    elif (WIDTH // 2 + 20 <= mouse_pos[0] <= WIDTH // 2 + 120 and 
+                            HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
+                        selected_color = "black"
+                        player = 'b'
+                        opp = 'w'
+
+                    if (WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105 and 
+                            HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
+                        current_version_index = (current_version_index - 1) % len(version_names)
+
+                    elif (WIDTH // 2 + 110 <= mouse_pos[0] <= WIDTH // 2 + 130 and 
+                            HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
+                        current_version_index = (current_version_index + 1) % len(version_names)
+    
                     board = [
                         [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
                         [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
