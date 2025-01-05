@@ -161,7 +161,7 @@ board = [
     ]
 
 def game_screen():
-    global selected_piece, valid_moves, current_screen, board
+    global selected_piece, valid_moves, current_screen, board, players_turn
 
     current_screen = "game"
 
@@ -176,6 +176,9 @@ def game_screen():
     draw_pieces(screen, board)
 
     for event in pygame.event.get():
+        if not players_turn:
+            continue
+
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
@@ -191,6 +194,7 @@ def game_screen():
             if selected_piece:
                 if (row, col) in valid_moves:
                     board = move_piece(board, selected_piece, (row, col))
+                    players_turn = not players_turn
                     selected_piece = None
                     valid_moves = []
                 else:
@@ -219,7 +223,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = event.pos
 
-                if current_screen != "game":
+                if current_screen == "play_screen":
                     if (WIDTH // 2 - 120 <= mouse_pos[0] <= WIDTH // 2 - 20 and 
                             HEIGHT // 2 - 50 <= mouse_pos[1] <= HEIGHT // 2 + 50):
                         selected_color = "white"
@@ -240,6 +244,9 @@ def main():
                             HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                         current_version_index = (current_version_index + 1) % len(version_names)
     
+                    global players_turn
+                    players_turn = True if player == 'w' else False
+
                     board = [
                         [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
                         [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
