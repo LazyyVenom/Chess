@@ -84,6 +84,24 @@ def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
         board[original_pos[0]][original_pos[1]] = '--'
 
         return board
+    
+    #Castling Special Case
+    if board[original_pos[0]][original_pos[1]][1] == 'k' and abs(original_pos[1] - new_pos[1]) == 2:
+        if new_pos[1] == 1:
+            board[new_pos[0]][2] = board[new_pos[0]][0]
+            board[new_pos[0]][0] = '--'
+            board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
+            board[original_pos[0]][original_pos[1]] = '--'
+
+        else:
+            board[new_pos[0]][5] = board[new_pos[0]][7]
+            board[new_pos[0]][7] = '--'
+        
+        global king_moved
+        return board
+
+    #Checking if rooks moved
+
 
     board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
     board[original_pos[0]][original_pos[1]] = '--'

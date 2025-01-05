@@ -247,7 +247,10 @@ def main():
                             HEIGHT // 2 + 140 - 20 <= mouse_pos[1] <= HEIGHT // 2 + 140 + 20):
                         current_version_index = (current_version_index + 1) % len(version_names)
     
-                    global players_turn
+                    global players_turn, king_moved, left_rook_moved, right_rook_moved
+                    king_moved = False
+                    left_rook_moved = False
+                    right_rook_moved = False
                     players_turn = True if player == 'w' else False
 
                     board = [
