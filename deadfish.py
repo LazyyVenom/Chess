@@ -4,20 +4,6 @@ from valid_moves_check import Valid_Moves
 import random
 from board_utils import move_piece
 
-opp = 'b'
-player = 'w'
-
-board = [
-        [f'{opp}r',f'{opp}n',f'{opp}b',f'{opp}k',f'{opp}q',f'{opp}b',f'{opp}n',f'{opp}r'],
-        [f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p',f'{opp}p'],
-        ['--','--','--','--','--','--','--','--',],
-        ['--','--','--','--','--','--','--','--',],
-        ['--','--','--','--','--','--','--','--',],
-        ['--','--','--','--','--','--','--','--',],
-        [f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p',f'{player}p'],
-        [f'{player}r',f'{player}n',f'{player}b',f'{player}k',f'{player}q',f'{player}b',f'{player}n',f'{player}r'],
-    ]
-
 def deadfish(board: List[List[str]],deadfish_color: str ,deciding_function: Callable):
     board = board[::-1]
     possible_pieces = []
@@ -56,6 +42,3 @@ def deadfish(board: List[List[str]],deadfish_color: str ,deciding_function: Call
             return board[::-1]
 
     return board
-
-
-print(deadfish(board, opp ,lambda x: x))
