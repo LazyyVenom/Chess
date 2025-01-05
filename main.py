@@ -2,6 +2,7 @@ import pygame
 import sys
 import webbrowser
 from board_utils import *
+from deadfish import deadfish
 
 pygame.init()
 
@@ -177,7 +178,9 @@ def game_screen():
 
     for event in pygame.event.get():
         if not players_turn:
-            continue
+            deadfish_color = 'w' if player == 'b' else 'b'
+            board = deadfish(board, deadfish_color ,lambda x: x)
+            players_turn = True
 
         if event.type == pygame.QUIT:
             pygame.quit()
