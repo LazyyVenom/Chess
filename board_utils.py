@@ -56,7 +56,7 @@ def draw_pieces(screen,board: List[list[str]]):
                 screen.blit(images[piece], (col * SQUARE_SIZE, row * SQUARE_SIZE))
 
 
-def valid_move_decider(board: List[list[str]], piece_cord: tuple):
+def valid_move_decider(board: List[list[str]], piece_cord: tuple, king_details: tuple = (True, True, True)):
     valid_moves = []
 
     piece = board[piece_cord[0]][piece_cord[1]]
@@ -72,7 +72,7 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple):
     elif piece[1] == 'q':
         valid_moves = Valid_Moves.check_queen(board, piece_cord, piece[0])
     elif piece[1] == 'k':
-        valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0])
+        valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
 
     return valid_moves
 
@@ -100,11 +100,7 @@ def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
             board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
             board[original_pos[0]][original_pos[1]] = '--'
         
-        king_moved = True
         return board
-
-    #Checking if rooks moved
-
 
     board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
     board[original_pos[0]][original_pos[1]] = '--'
