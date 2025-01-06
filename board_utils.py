@@ -59,6 +59,9 @@ def draw_pieces(screen,board: List[list[str]]):
 def valid_move_decider(board: List[list[str]], piece_cord: tuple, king_details: tuple = (True, True, True)):
     valid_moves = []
 
+    if not piece_cord:
+        return []
+    
     piece = board[piece_cord[0]][piece_cord[1]]
 
     if piece[1] == 'p':
@@ -107,3 +110,20 @@ def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
 
     return board
 
+
+def check(updated_board: List[list[str]], opp_color: str):
+    pieces = []
+
+    for row in range(8):
+        for col in range(8):
+            piece = updated_board[row][col]
+            if piece[0] == opp_color:
+                pieces.append((row,col))
+    
+    for piece in pieces:
+        valid_moves = valid_move_decider(updated_board, piece)
+        for move in valid_moves:
+            if updated_board[move[0]][move[1]][1] == 'k':
+                return True
+
+    return False    

@@ -3,6 +3,7 @@ import sys
 import webbrowser
 from board_utils import *
 from deadfish import deadfish
+import copy
 
 pygame.init()
 
@@ -248,7 +249,9 @@ def game_screen():
                 ):
                     selected_piece = (row, col)
 
-                if board[selected_piece[0]][selected_piece[1]][1] == "k":
+                opp_color = "b" if player == "w" else "w"
+
+                if selected_piece and board[selected_piece[0]][selected_piece[1]][1] == "k":
                     valid_moves = valid_move_decider(
                         board,
                         selected_piece,
@@ -258,6 +261,13 @@ def game_screen():
                 else:
                     valid_moves = valid_move_decider(board, selected_piece)
 
+                new_valid_moves = valid_moves.copy()
+
+                for move in new_valid_moves:
+                    temp_board = copy.deepcopy(board)
+                    temp_board = move_piece(temp_board, selected_piece, move)
+                    if check(temp_board[::-1], opp_color):
+                        valid_moves.remove(move)
 
 def main():
     global current_screen, selected_color, current_version_index, player, opp, board
