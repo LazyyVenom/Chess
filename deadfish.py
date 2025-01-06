@@ -2,7 +2,8 @@
 from typing import List, Callable
 from valid_moves_check import Valid_Moves
 import random
-from board_utils import move_piece
+from board_utils import move_piece, check
+import copy
 
 def deadfish(board: List[List[str]],deadfish_color: str ,deciding_function: Callable):
     board = board[::-1]
@@ -34,6 +35,16 @@ def deadfish(board: List[List[str]],deadfish_color: str ,deciding_function: Call
         else:
             raise ValueError('Invalid piece')
         
+        new_valid_moves = valid_moves.copy()
+
+        opp_color = 'w' if deadfish_color == 'b' else 'b'
+
+        for move in new_valid_moves:
+            temp_board = copy.deepcopy(board)
+            temp_board = move_piece(temp_board, (row,col), move)
+            if check(temp_board[::-1], opp_color):
+                valid_moves.remove(move)
+
         # for move in valid_moves:
         if valid_moves:
             move = random.choice(valid_moves)
