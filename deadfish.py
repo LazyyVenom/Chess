@@ -84,4 +84,4 @@ class DeadFish:
                 board = move_piece(board, (row, col), move)
                 return board[::-1]
 
-        return board
+        return board[::-1]
