@@ -129,17 +129,17 @@ def check(updated_board: List[list[str]], opp_color: str):
     return False
 
 
-def checkmate(updated_board: List[list[str]], opp_color: str):
+def checkmate(board: List[list[str]], color: str):
     pieces = []
 
     for row in range(8):
         for col in range(8):
-            piece = updated_board[row][col]
-            if piece[0] == opp_color:
+            piece = board[row][col]
+            if piece[0] == color:
                 pieces.append((row,col))
     
     for piece in pieces:
-        valid_moves = valid_move_decider(updated_board, piece)
+        valid_moves = valid_move_decider(board, piece)
         if valid_moves:
             return False
 
