@@ -206,10 +206,8 @@ def game_screen():
 
     for event in pygame.event.get():
         if not players_turn:
-            deadfish_color = "w" if player == "b" else "b"
-            
-            if stalemate(board, deadfish_color):
-                if check(board, player):
+            if ThisDeadFish.stalemate(board):
+                if ThisDeadFish.inCheck(board):
                     print("Checkmate")
                 else:
                     print("Stalemate")
@@ -220,7 +218,7 @@ def game_screen():
             else:
                 print("NO STALEMATE OR CHECKMATE")
 
-            board = ThisDeadFish.move(board, deadfish_color)
+            board = ThisDeadFish.move(board)
             players_turn = True
 
         if event.type == pygame.QUIT:

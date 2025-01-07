@@ -78,10 +78,7 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple, king_details: 
     elif piece[1] == 'q':
         valid_moves = Valid_Moves.check_queen(board, piece_cord, piece[0])
     elif piece[1] == 'k':
-        try:
-            valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
-        except:
-            print(piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
+        valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
 
     return valid_moves
 
