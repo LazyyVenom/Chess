@@ -2,7 +2,7 @@ import pygame
 import sys
 import webbrowser
 from board_utils import *
-from deadfish import deadfish
+from deadfish import DeadFish
 import copy
 
 pygame.init()
@@ -206,7 +206,7 @@ def game_screen():
     for event in pygame.event.get():
         if not players_turn:
             deadfish_color = "w" if player == "b" else "b"
-            board = deadfish(board, deadfish_color, lambda x: x)
+            board = ThisDeadFish.move(board, deadfish_color)
             players_turn = True
 
         if event.type == pygame.QUIT:
@@ -224,6 +224,7 @@ def game_screen():
             if selected_piece:
                 if (row, col) in valid_moves:
                     
+                    #Checking if rook moved
                     if board[selected_piece[0]][selected_piece[1]][1] == 'r':
                         if selected_piece[1] == 0 and not left_rook_moved:
                             left_rook_moved = True
@@ -323,11 +324,12 @@ def main():
                             version_names
                         )
 
-                    global players_turn, king_moved, left_rook_moved, right_rook_moved
+                    global players_turn, king_moved, left_rook_moved, right_rook_moved, ThisDeadFish
                     king_moved = False
                     left_rook_moved = False
                     right_rook_moved = False
                     players_turn = True if player == "w" else False
+                    ThisDeadFish = DeadFish(current_version_index)
 
                     board = [
                         [
