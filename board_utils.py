@@ -114,7 +114,7 @@ def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
     return board
 
 
-def check(updated_board: List[list[str]], opp_color: str):
+def check(updated_board: List[list[str]], opp_color: str, DeadFish):
     pieces = []
 
     for row in range(8):
@@ -124,7 +124,7 @@ def check(updated_board: List[list[str]], opp_color: str):
                 pieces.append((row,col))
     
     for piece in pieces:
-        valid_moves = valid_move_decider(updated_board, piece)
+        valid_moves = valid_move_decider(updated_board, piece, (not DeadFish.king_moved,not DeadFish.left_rook_moved,not DeadFish.right_rook_moved))
         for move in valid_moves:
             if updated_board[move[0]][move[1]][1] == 'k':
                 return True

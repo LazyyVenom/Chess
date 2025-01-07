@@ -206,8 +206,8 @@ def game_screen():
 
     for event in pygame.event.get():
         if not players_turn:
-            if ThisDeadFish.stalemate(board):
-                if ThisDeadFish.inCheck(board):
+            if ThisDeadFish.stalemate(board[::-1]):
+                if ThisDeadFish.inCheck(board[::-1]):
                     print("Checkmate")
                 else:
                     print("Stalemate")
@@ -282,7 +282,7 @@ def game_screen():
                 for move in new_valid_moves:
                     temp_board = copy.deepcopy(board)
                     temp_board = move_piece(temp_board, selected_piece, move)
-                    if check(temp_board[::-1], opp_color):
+                    if check(temp_board[::-1], opp_color, ThisDeadFish):
                         valid_moves.remove(move)
 
 

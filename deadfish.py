@@ -22,9 +22,14 @@ class DeadFish:
                 if piece[0] == self.deadfish_color:
                     pieces.append((row,col))
         
+        print(pieces)
+
         for piece in pieces:
-            valid_moves = valid_move_decider(board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
+            test_board = copy.deepcopy(board)
+            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
             if valid_moves:
+                print(piece)
+                print(board[piece[0]][piece[1]])
                 return False
 
         return True
@@ -41,7 +46,8 @@ class DeadFish:
                     pieces.append((row,col))
         
         for piece in pieces:
-            valid_moves = valid_move_decider(board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
+            test_board = copy.deepcopy(board)
+            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
             for move in valid_moves:
                 if board[move[0]][move[1]][1] == 'k':
                     return True
@@ -71,7 +77,7 @@ class DeadFish:
             for move in new_valid_moves:
                 temp_board = copy.deepcopy(board)
                 temp_board = move_piece(temp_board, (row, col), move)
-                if check(temp_board[::-1], opp_color):
+                if self.inCheck(temp_board[::-1]):
                     valid_moves.remove(move)
 
             # for move in valid_moves:
@@ -82,15 +88,12 @@ class DeadFish:
                 if board[row][col][1] == "r":
                     if col == 0 and not self.left_rook_moved:
                         self.left_rook_moved = True
-                        print("Left rook moved")
                     elif row == 7 and not self.right_rook_moved:
                         self.right_rook_moved = True
-                        print("Right rook moved")
 
                 # Checking if king moved
                 if board[row][col][1] == "k":
                     self.king_moved = True
-                    print("King moved")
 
                 board = move_piece(board, (row, col), move)
                 return board[::-1]
