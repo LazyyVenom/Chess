@@ -215,9 +215,6 @@ def game_screen():
                 pygame.quit()
                 sys.exit()
             
-            else:
-                print("NO STALEMATE OR CHECKMATE")
-
             board = ThisDeadFish.move(board)
             players_turn = True
 

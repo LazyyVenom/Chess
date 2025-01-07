@@ -19,28 +19,25 @@ class DeadFish:
         for row in range(8):
             for col in range(8):
                 piece = board[row][col]
-                if piece[0] == self.deadfish_color and piece[1] != 'p':
+                if piece[0] == self.deadfish_color:
                     pieces.append((row,col))
 
         for piece in pieces:
             test_board = copy.deepcopy(board)
             valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
             
-            for move in valid_moves:
-                if DeadFish.inCheck(self, test_board):
+            valid_moves_test = valid_moves.copy()
+            for move in valid_moves_test:
+                if self.inCheck(test_board):
                     valid_moves.remove(move)
 
             if valid_moves:
-                print(valid_moves)
-                print(piece)
-                print(board[piece[0]][piece[1]])
-                for row in board:
-                    print(row)
                 return False
 
         return True
 
     def inCheck(self, board: List[List[str]]) -> bool:
+        board = board
         opp_color = "w" if self.deadfish_color == "b" else "b"
 
         pieces = []
