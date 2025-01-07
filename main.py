@@ -209,7 +209,7 @@ def game_screen():
             deadfish_color = "w" if player == "b" else "b"
             
             if stalemate(board, deadfish_color):
-                if check(board, deadfish_color):
+                if check(board, player):
                     print("Checkmate")
                 else:
                     print("Stalemate")
