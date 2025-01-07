@@ -5,7 +5,6 @@ import random
 from board_utils import move_piece, check
 import copy
 
-
 class DeadFish:
     def __init__(self, version_idx: int):
         self.version_idx = version_idx
