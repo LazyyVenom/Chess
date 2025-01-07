@@ -126,4 +126,21 @@ def check(updated_board: List[list[str]], opp_color: str):
             if updated_board[move[0]][move[1]][1] == 'k':
                 return True
 
-    return False    
+    return False
+
+
+def checkmate(updated_board: List[list[str]], opp_color: str):
+    pieces = []
+
+    for row in range(8):
+        for col in range(8):
+            piece = updated_board[row][col]
+            if piece[0] == opp_color:
+                pieces.append((row,col))
+    
+    for piece in pieces:
+        valid_moves = valid_move_decider(updated_board, piece)
+        if valid_moves:
+            return False
+
+    return True
