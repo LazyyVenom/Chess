@@ -1,5 +1,5 @@
 # For Deadfish interpreter
-from typing import List, Callable
+from typing import List
 from valid_moves_check import Valid_Moves
 import random
 from board_utils import move_piece, check
