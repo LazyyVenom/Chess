@@ -202,7 +202,7 @@ class Valid_Moves:
                 if board[coords[0] - i][coords[1] + i] != "--":
                     break
 
-        if coords[0] + 1 < 8 and coords[1] - 1 >= 0:
+        if coords[0] + 1 <= 8 and coords[1] - 1 >= 0:
             for i in range(1, min(8 - coords[0], coords[1] + 1)):
                 if board[coords[0] + i][coords[1] - i][0] == player:
                     break
@@ -210,7 +210,7 @@ class Valid_Moves:
                 if board[coords[0] + i][coords[1] - i] != "--":
                     break
 
-        if coords[0] + 1 < 8 and coords[1] + 1 <= 8:
+        if coords[0] + 1 <= 8 and coords[1] + 1 <= 8:
             for i in range(1, min(8 - coords[0], 8 - coords[1])):
                 if board[coords[0] + i][coords[1] + i][0] == player:
                     break
