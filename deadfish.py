@@ -13,6 +13,35 @@ class DeadFish:
         self.right_rook_moved = False
         self.deadfish_color = deadfish_color
 
+    def move(self, board, original_pos, new_pos):
+        #Pawn Promotion
+        if new_pos[0] == 0 and board[original_pos[0]][original_pos[1]][1] == 'p':
+            board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]][0] + 'q'
+            board[original_pos[0]][original_pos[1]] = '--'
+
+            return board
+        
+        #Castling Special Case
+        if board[original_pos[0]][original_pos[1]][1] == 'k' and abs(original_pos[1] - new_pos[1]) == 2:
+            if new_pos[1] == 1:
+                board[new_pos[0]][2] = board[new_pos[0]][0]
+                board[new_pos[0]][0] = '--'
+                board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
+                board[original_pos[0]][original_pos[1]] = '--'
+
+            else:
+                board[new_pos[0]][4] = board[new_pos[0]][7]
+                board[new_pos[0]][7] = '--'
+                board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
+                board[original_pos[0]][original_pos[1]] = '--'
+            
+            return board
+
+        board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
+        board[original_pos[0]][original_pos[1]] = '--'
+
+        return board
+
     def stalemate(self, board: List[List[str]]) -> bool:
         pieces = []
 
@@ -28,6 +57,8 @@ class DeadFish:
             
             valid_moves_test = valid_moves.copy()
             for move in valid_moves_test:
+                test_board = copy.deepcopy(board)
+                test_board = self.move(test_board, piece, move)
                 if self.inCheck(test_board):
                     valid_moves.remove(move)
 
@@ -57,7 +88,7 @@ class DeadFish:
 
         return False
 
-    def move(self, board: List[List[str]]) -> List[List[str]]:
+    def make_decision(self, board: List[List[str]]) -> List[List[str]]:
         board = board[::-1]
         possible_pieces = []
 
@@ -98,7 +129,7 @@ class DeadFish:
                 if board[row][col][1] == "k":
                     self.king_moved = True
 
-                board = move_piece(board, (row, col), move)
+                board = self.move(board, (row, col), move)
                 return board[::-1]
 
         return board[::-1]

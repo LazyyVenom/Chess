@@ -208,14 +208,16 @@ def game_screen():
         if not players_turn:
             if ThisDeadFish.stalemate(board[::-1]):
                 if ThisDeadFish.inCheck(board[::-1]):
+                    for row in board:
+                        print(row)
                     print("Checkmate")
                 else:
                     print("Stalemate")
-                    
+
                 pygame.quit()
                 sys.exit()
             
-            board = ThisDeadFish.move(board)
+            board = ThisDeadFish.make_decision(board)
             players_turn = True
 
         if event.type == pygame.QUIT:
