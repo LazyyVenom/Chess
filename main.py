@@ -187,6 +187,7 @@ def play_screen():
         game_screen,
     )
 
+
 def game_screen():
     global selected_piece, valid_moves, current_screen, board, players_turn
     global king_moved, left_rook_moved, right_rook_moved
@@ -223,16 +224,16 @@ def game_screen():
 
             if selected_piece:
                 if (row, col) in valid_moves:
-                    
-                    #Checking if rook moved
-                    if board[selected_piece[0]][selected_piece[1]][1] == 'r':
+
+                    # Checking if rook moved
+                    if board[selected_piece[0]][selected_piece[1]][1] == "r":
                         if selected_piece[1] == 0 and not left_rook_moved:
                             left_rook_moved = True
                         elif selected_piece[1] == 7 and not right_rook_moved:
                             right_rook_moved = True
 
-                    #Checking if king moved
-                    if board[selected_piece[0]][selected_piece[1]][1] == 'k':
+                    # Checking if king moved
+                    if board[selected_piece[0]][selected_piece[1]][1] == "k":
                         king_moved = True
 
                     board = move_piece(board, selected_piece, (row, col))
@@ -252,7 +253,10 @@ def game_screen():
 
                 opp_color = "b" if player == "w" else "w"
 
-                if selected_piece and board[selected_piece[0]][selected_piece[1]][1] == "k":
+                if (
+                    selected_piece
+                    and board[selected_piece[0]][selected_piece[1]][1] == "k"
+                ):
                     valid_moves = valid_move_decider(
                         board,
                         selected_piece,
@@ -269,6 +273,7 @@ def game_screen():
                     temp_board = move_piece(temp_board, selected_piece, move)
                     if check(temp_board[::-1], opp_color):
                         valid_moves.remove(move)
+
 
 def main():
     global current_screen, selected_color, current_version_index, player, opp, board
@@ -331,87 +336,17 @@ def main():
                     players_turn = True if player == "w" else False
                     ThisDeadFish = DeadFish(current_version_index)
 
+                    o = opp
+                    p = player
                     board = [
-                        [
-                            f"{opp}r",
-                            f"{opp}n",
-                            f"{opp}b",
-                            f"{opp}k",
-                            f"{opp}q",
-                            f"{opp}b",
-                            f"{opp}n",
-                            f"{opp}r",
-                        ],
-                        [
-                            f"{opp}p",
-                            f"{opp}p",
-                            f"{opp}p",
-                            f"{opp}p",
-                            f"{opp}p",
-                            f"{opp}p",
-                            f"{opp}p",
-                            f"{opp}p",
-                        ],
-                        [
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                        ],
-                        [
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                        ],
-                        [
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                        ],
-                        [
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                            "--",
-                        ],
-                        [
-                            f"{player}p",
-                            f"{player}p",
-                            f"{player}p",
-                            f"{player}p",
-                            f"{player}p",
-                            f"{player}p",
-                            f"{player}p",
-                            f"{player}p",
-                        ],
-                        [
-                            f"{player}r",
-                            f"{player}n",
-                            f"{player}b",
-                            f"{player}k",
-                            f"{player}q",
-                            f"{player}b",
-                            f"{player}n",
-                            f"{player}r",
-                        ],
+                        [f"{o}r",f"{o}n",f"{o}b",f"{o}k",f"{o}q",f"{o}b",f"{o}n",f"{o}r",],
+                        [f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",],
+                        ["--","--","--","--","--","--","--","--",],
+                        ["--","--","--","--","--","--","--","--",],
+                        ["--","--","--","--","--","--","--","--",],
+                        ["--","--","--","--","--","--","--","--",],
+                        [f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",],
+                        [f"{p}r",f"{p}n",f"{p}b",f"{p}k",f"{p}q",f"{p}b",f"{p}n",f"{p}r",],
                     ]
 
         if current_screen == "main_menu":
