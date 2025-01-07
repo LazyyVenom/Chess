@@ -20,8 +20,11 @@ def load_images():
 
 images = load_images()
 
-def draw_board(window, valid_moves,selected=None):
-    colors = [LIGHT_BLUE, DARK_BLUE]
+def draw_board(window, valid_moves,selected=None,player_color='w'):
+    if player_color == 'b':
+        colors = [LIGHT_BLUE, DARK_BLUE]
+    else:
+        colors = [DARK_BLUE, LIGHT_BLUE]
     for row in range(8):
         for col in range(8):
             if (row, col) in valid_moves:
@@ -75,7 +78,10 @@ def valid_move_decider(board: List[list[str]], piece_cord: tuple, king_details: 
     elif piece[1] == 'q':
         valid_moves = Valid_Moves.check_queen(board, piece_cord, piece[0])
     elif piece[1] == 'k':
-        valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
+        try:
+            valid_moves = Valid_Moves.check_king(board, piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
+        except:
+            print(piece_cord, piece[0], king_details[0], king_details[1], king_details[2])
 
     return valid_moves
 

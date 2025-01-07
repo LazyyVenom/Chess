@@ -200,7 +200,7 @@ def game_screen():
         valid_moves = []
 
     screen.fill(DARK_GRAY)
-    draw_board(screen, valid_moves, selected_piece)
+    draw_board(screen, valid_moves, selected_piece, player)
     draw_players_info(screen, player, version_names[current_version_index])
     draw_pieces(screen, board)
 
@@ -216,6 +216,9 @@ def game_screen():
                     
                 pygame.quit()
                 sys.exit()
+            
+            else:
+                print("NO STALEMATE OR CHECKMATE")
 
             board = ThisDeadFish.move(board, deadfish_color)
             players_turn = True
