@@ -1,7 +1,6 @@
 # For checking specific moves for a piece
 from typing import List
 
-
 class Valid_Moves:
     @staticmethod
     def check_pawn(board: List[List[str]], coords: tuple, player: str):
