@@ -129,7 +129,7 @@ def check(updated_board: List[list[str]], opp_color: str):
     return False
 
 
-def checkmate(board: List[list[str]], color: str):
+def stalemate(board: List[list[str]], color: str):
     pieces = []
 
     for row in range(8):
