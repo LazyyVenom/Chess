@@ -4,6 +4,7 @@ from valid_moves_check import Valid_Moves
 import random
 from board_utils import move_piece, check, valid_move_decider
 import copy
+import threading
 
 class DeadFish:
     def __init__(self, version_idx: int, deadfish_color: str):
@@ -51,6 +52,8 @@ class DeadFish:
                 if piece[0] == self.deadfish_color:
                     pieces.append((row,col))
 
+        
+
         for piece in pieces:
             test_board = copy.deepcopy(board)
             valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
@@ -68,6 +71,13 @@ class DeadFish:
         return True
 
     def inCheck(self, board: List[List[str]]) -> bool:
+        def multi_thread_tester(board, piece):
+            test_board = copy.deepcopy(board)
+            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
+            for move in valid_moves:
+                if board[move[0]][move[1]][1] == 'k':
+                    return True
+        
         board = board
         opp_color = "w" if self.deadfish_color == "b" else "b"
 
@@ -78,13 +88,14 @@ class DeadFish:
                 piece = board[row][col]
                 if piece[0] == opp_color:
                     pieces.append((row,col))
-        
+
+        threads = []
+
         for piece in pieces:
-            test_board = copy.deepcopy(board)
-            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
-            for move in valid_moves:
-                if board[move[0]][move[1]][1] == 'k':
-                    return True
+            threads.append(threading.Thread(multi_thread_tester, args=(board,piece)))
+
+        for thread in threads:
+            print        
 
         return False
 
