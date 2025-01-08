@@ -8,10 +8,12 @@ def th(i, result_queue):
         return
     
     result = i * 2
-    result_queue.put(result)
     
     if result == 10:
         stop_event.set()
+    
+    if not stop_event.is_set():
+        result_queue.put(result)
 
 threads = []
 results = queue.Queue()
