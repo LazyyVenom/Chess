@@ -71,33 +71,42 @@ class DeadFish:
         return True
 
     def inCheck(self, board: List[List[str]]) -> bool:
+        stop_event = threading.Event()
+        threads = []
+
         def multi_thread_tester(board, piece):
+            if stop_event.is_set():
+                return
+            
             test_board = copy.deepcopy(board)
-            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
+            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved, not self.left_rook_moved, not self.right_rook_moved))
+            
             for move in valid_moves:
-                if board[move[0]][move[1]][1] == 'k':
-                    return True
-        
+                if test_board[move[0]][move[1]][1] == 'k':
+                    stop_event.set()
+                    return
+
         board = board
         opp_color = "w" if self.deadfish_color == "b" else "b"
-
+        
         pieces = []
 
         for row in range(8):
             for col in range(8):
                 piece = board[row][col]
                 if piece[0] == opp_color:
-                    pieces.append((row,col))
-
-        threads = []
+                    pieces.append((row, col))
 
         for piece in pieces:
-            threads.append(threading.Thread(multi_thread_tester, args=(board,piece)))
+            threads.append(threading.Thread(target=multi_thread_tester, args=(board, piece)))
 
         for thread in threads:
-            print        
+            thread.start()
 
-        return False
+        for thread in threads:
+            thread.join()
+
+        return stop_event.is_set()
 
     def make_decision(self, board: List[List[str]]) -> List[List[str]]:
         board = board[::-1]
