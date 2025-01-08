@@ -2,6 +2,7 @@ from typing import List
 import pygame
 from valid_moves_check import Valid_Moves
 
+
 DARK_BLUE = (0, 105, 153)
 LIGHT_BLUE = (230, 247, 255)
 HIGHLIGHT_COLOR1 = (255, 179, 179)
