@@ -108,6 +108,7 @@ class DeadFish:
 
         return stop_event.is_set()
 
+
     def make_decision(self, board: List[List[str]]) -> List[List[str]]:
         board = board[::-1]
         possible_pieces = []
