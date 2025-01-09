@@ -5,6 +5,7 @@ import random
 from board_utils import move_piece, check, valid_move_decider
 import copy
 import threading
+from multiprocessing import Process
 
 class DeadFish:
     def __init__(self, version_idx: int, deadfish_color: str):
@@ -45,16 +46,9 @@ class DeadFish:
 
     def stalemate(self, board: List[List[str]]) -> bool:
         pieces = []
+        processes = []
 
-        
-
-        for row in range(8):
-            for col in range(8):
-                piece = board[row][col]
-                if piece[0] == self.deadfish_color:
-                    pieces.append((row,col))
-
-        for piece in pieces:
+        def process_stalemate_piece(board, piece):
             test_board = copy.deepcopy(board)
             valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
             
@@ -67,6 +61,21 @@ class DeadFish:
 
             if valid_moves:
                 return False
+            
+        for row in range(8):
+            for col in range(8):
+                piece = board[row][col]
+                if piece[0] == self.deadfish_color:
+                    pieces.append((row,col))
+
+        for piece in pieces:
+            processes.append(Process(process_stalemate_piece, (board, piece)))
+        
+        for process in processes:
+            process.start()
+        
+        for process in processes:
+            process.join()
 
         return True
 
