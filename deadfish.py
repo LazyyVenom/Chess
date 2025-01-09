@@ -1,11 +1,9 @@
 # For Deadfish interpreter
 from typing import List
-from valid_moves_check import Valid_Moves
 import random
-from board_utils import move_piece, check, valid_move_decider
+from board_utils import move_piece,  valid_move_decider
 import copy
 import threading
-from multiprocessing import Process
 
 class DeadFish:
     def __init__(self, version_idx: int, deadfish_color: str):
