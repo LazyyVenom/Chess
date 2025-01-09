@@ -44,27 +44,28 @@ class DeadFish:
 
         return board
 
+    def process_stalemate_piece(self, board, piece):
+        test_board = copy.deepcopy(board)
+        valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
+        
+        valid_moves_test = valid_moves.copy()
+        for move in valid_moves_test:
+            test_board = copy.deepcopy(board)
+            test_board = self.move(test_board, piece, move)
+            if self.inCheck(test_board):
+                valid_moves.remove(move)
+
+        if valid_moves:
+            global stalemate_condition, processes
+            for process in processes:
+                process.terminate()
+                stalemate_condition = False
+            return False
+
     def stalemate(self, board: List[List[str]]) -> bool:
         pieces = []
         processes = []
         stalemate_condition = True
-        def process_stalemate_piece(board, piece):
-            test_board = copy.deepcopy(board)
-            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
-            
-            valid_moves_test = valid_moves.copy()
-            for move in valid_moves_test:
-                test_board = copy.deepcopy(board)
-                test_board = self.move(test_board, piece, move)
-                if self.inCheck(test_board):
-                    valid_moves.remove(move)
-
-            if valid_moves:
-                for process in processes:
-                    process.terminate()
-                    global stalemate_condition
-                    stalemate_condition = False
-                return False
             
         for row in range(8):
             for col in range(8):
@@ -73,7 +74,7 @@ class DeadFish:
                     pieces.append((row,col))
 
         for piece in pieces:
-            processes.append(Process(target=process_stalemate_piece, args=(board, piece)))
+            processes.append(Process(target=self.process_stalemate_piece, args=(board, piece)))
         
         for process in processes:
             process.start()
