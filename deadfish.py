@@ -168,3 +168,4 @@ class DeadFish:
                 return board[::-1]
 
         return board[::-1]
+    
