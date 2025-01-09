@@ -46,13 +46,13 @@ class DeadFish:
     def stalemate(self, board: List[List[str]]) -> bool:
         pieces = []
 
+        
+
         for row in range(8):
             for col in range(8):
                 piece = board[row][col]
                 if piece[0] == self.deadfish_color:
                     pieces.append((row,col))
-
-        
 
         for piece in pieces:
             test_board = copy.deepcopy(board)
