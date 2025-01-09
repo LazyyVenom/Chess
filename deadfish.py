@@ -48,7 +48,6 @@ class DeadFish:
         pieces = []
         processes = []
         stalemate_condition = True
-
         def process_stalemate_piece(board, piece):
             test_board = copy.deepcopy(board)
             valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
