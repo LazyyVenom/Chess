@@ -44,43 +44,43 @@ class DeadFish:
 
         return board
 
-    def process_stalemate_piece(self, board, piece):
-        test_board = copy.deepcopy(board)
-        valid_moves = valid_move_decider(test_board, piece, (not self.king_moved,not self.left_rook_moved,not self.right_rook_moved))
-        
-        valid_moves_test = valid_moves.copy()
-        for move in valid_moves_test:
-            test_board = copy.deepcopy(board)
-            test_board = self.move(test_board, piece, move)
-            if self.inCheck(test_board):
-                valid_moves.remove(move)
-
-        if valid_moves:
-            global stalemate_condition, processes
-            for process in processes:
-                process.terminate()
-                stalemate_condition = False
-            return False
-
     def stalemate(self, board: List[List[str]]) -> bool:
         pieces = []
-        processes = []
+        threads = []
         stalemate_condition = True
+        stalemate_lock = threading.Lock()
+        
+        def thread_stalemate_piece(board, piece):
+            nonlocal stalemate_condition
+            test_board = copy.deepcopy(board)
+            valid_moves = valid_move_decider(test_board, piece, (not self.king_moved, not self.left_rook_moved, not self.right_rook_moved))
             
+            valid_moves_test = valid_moves.copy()
+            for move in valid_moves_test:
+                test_board = copy.deepcopy(board)
+                test_board = self.move(test_board, piece, move)
+                if self.inCheck(test_board):
+                    valid_moves.remove(move)
+
+            if valid_moves:
+                with stalemate_lock:
+                    stalemate_condition = False
+
         for row in range(8):
             for col in range(8):
                 piece = board[row][col]
                 if piece[0] == self.deadfish_color:
-                    pieces.append((row,col))
+                    pieces.append((row, col))
 
         for piece in pieces:
-            processes.append(Process(target=self.process_stalemate_piece, args=(board, piece)))
+            thread = threading.Thread(target=thread_stalemate_piece, args=(board, piece))
+            threads.append(thread)
         
-        for process in processes:
-            process.start()
+        for thread in threads:
+            thread.start()
         
-        for process in processes:
-            process.join()
+        for thread in threads:
+            thread.join()
 
         return stalemate_condition
 
