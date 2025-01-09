@@ -47,6 +47,7 @@ class DeadFish:
     def stalemate(self, board: List[List[str]]) -> bool:
         pieces = []
         processes = []
+        stalemate_condition = True
 
         def process_stalemate_piece(board, piece):
             test_board = copy.deepcopy(board)
@@ -60,6 +61,10 @@ class DeadFish:
                     valid_moves.remove(move)
 
             if valid_moves:
+                for process in processes:
+                    process.terminate()
+                    global stalemate_condition
+                    stalemate_condition = False
                 return False
             
         for row in range(8):
@@ -77,7 +82,7 @@ class DeadFish:
         for process in processes:
             process.join()
 
-        return True
+        return stalemate_condition
 
     def inCheck(self, board: List[List[str]]) -> bool:
         stop_event = threading.Event()
