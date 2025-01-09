@@ -74,7 +74,7 @@ class DeadFish:
                     pieces.append((row,col))
 
         for piece in pieces:
-            processes.append(Process(process_stalemate_piece, (board, piece)))
+            processes.append(Process(target=process_stalemate_piece, args=(board, piece)))
         
         for process in processes:
             process.start()
