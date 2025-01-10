@@ -190,7 +190,7 @@ def play_screen():
 def result_screen(result_message):
     screen.fill(DARK_GRAY)
     title_surface = title_font.render(result_message, True, WHITE)
-    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2))
     screen.blit(title_surface, title_rect)
     draw_back_button()
 
@@ -214,10 +214,10 @@ def game_screen():
         if not players_turn:
             if ThisDeadFish.stalemate(board[::-1]):
                 if ThisDeadFish.inCheck(board[::-1]):
-                    current_screen = "result_screen"
+                    current_screen = "result_screen_checkmate"
                     return
                 else:
-                    current_screen = "result_screen"
+                    current_screen = "result_screen_stalemate"
                     return
 
             board = ThisDeadFish.make_decision(board)
