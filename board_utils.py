@@ -1,6 +1,8 @@
 from typing import List
 import pygame
 from valid_moves_check import Valid_Moves
+import threading
+from copy import deepcopy
 
 DARK_BLUE = (0, 105, 153)
 LIGHT_BLUE = (230, 247, 255)
@@ -116,6 +118,18 @@ def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
 
 def check(updated_board: List[list[str]], opp_color: str, DeadFish):
     pieces = []
+    stop_event = threading.Event()
+    threads = []
+
+    def multi_thread_tester(board, piece):
+        if stop_event.is_set():
+            return
+        
+        valid_moves = valid_move_decider(updated_board, piece, (not DeadFish.king_moved,not DeadFish.left_rook_moved,not DeadFish.right_rook_moved))
+        for move in valid_moves:
+            if updated_board[move[0]][move[1]][1] == 'k':
+                stop_event.set()
+                return
 
     for row in range(8):
         for col in range(8):
@@ -124,12 +138,18 @@ def check(updated_board: List[list[str]], opp_color: str, DeadFish):
                 pieces.append((row,col))
     
     for piece in pieces:
-        valid_moves = valid_move_decider(updated_board, piece, (not DeadFish.king_moved,not DeadFish.left_rook_moved,not DeadFish.right_rook_moved))
-        for move in valid_moves:
-            if updated_board[move[0]][move[1]][1] == 'k':
-                return True
+        new_board = deepcopy(updated_board)
+        new_board = move_piece(new_board, piece, piece)
+        thread = threading.Thread(target=multi_thread_tester, args=(new_board, piece))
+        threads.append(threads)
+    
+    for thread in threads:
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
 
-    return False
+    return stop_event.is_set()
 
 
 def stalemate(board: List[list[str]], color: str):
