@@ -177,7 +177,6 @@ def play_screen():
     )
 
     draw_version_selection()
-
     draw_back_button()
 
     draw_button(
@@ -188,15 +187,12 @@ def play_screen():
     )
 
 
-def checkmate_screen():
+def result_screen(result_message):
     screen.fill(DARK_GRAY)
-
-    title_surface = title_font.render("Checkmate", True, WHITE)
+    title_surface = title_font.render(result_message, True, WHITE)
     title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
     screen.blit(title_surface, title_rect)
-
     draw_back_button()
-
 
 def game_screen():
     global selected_piece, valid_moves, current_screen, board, players_turn
@@ -218,12 +214,12 @@ def game_screen():
         if not players_turn:
             if ThisDeadFish.stalemate(board[::-1]):
                 if ThisDeadFish.inCheck(board[::-1]):
-                    current_screen = "checkmate_screen"
-                    print("Checkmate")
+                    current_screen = "result_screen"
                     return
                 else:
-                    print("Stalemate")
-            
+                    current_screen = "result_screen"
+                    return
+
             board = ThisDeadFish.make_decision(board)
             players_turn = True
 
@@ -374,8 +370,10 @@ def main():
             instructions_screen()
         elif current_screen == "game":
             game_screen()
-        elif current_screen == "checkmate_screen":
-            checkmate_screen()
+        elif current_screen == "result_screen_checkmate":
+            result_screen("Checkmate")
+        elif current_screen == "result_screen_stalemate":
+            result_screen("Stalemate")
 
         pygame.display.flip()
 
