@@ -188,6 +188,18 @@ def play_screen():
     )
 
 
+def checkmate_screen():
+    global current_screen
+    current_screen = "checkmate_screen"
+    screen.fill(DARK_GRAY)
+
+    title_surface = title_font.render("Checkmate", True, WHITE)
+    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+    screen.blit(title_surface, title_rect)
+
+    draw_back_button()
+
+
 def game_screen():
     global selected_piece, valid_moves, current_screen, board, players_turn
     global king_moved, left_rook_moved, right_rook_moved
@@ -210,7 +222,7 @@ def game_screen():
                 if ThisDeadFish.inCheck(board[::-1]):
                     for row in board:
                         print(row)
-                    print("Checkmate")
+                    checkmate_screen()
                 else:
                     print("Stalemate")
 
