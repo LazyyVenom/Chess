@@ -141,7 +141,7 @@ def check(updated_board: List[list[str]], opp_color: str, DeadFish):
         new_board = deepcopy(updated_board)
         new_board = move_piece(new_board, piece, piece)
         thread = threading.Thread(target=multi_thread_tester, args=(new_board, piece))
-        threads.append(threads)
+        threads.append(thread)
     
     for thread in threads:
         thread.start()
