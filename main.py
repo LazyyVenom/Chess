@@ -197,6 +197,8 @@ def checkmate_screen():
     title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
     screen.blit(title_surface, title_rect)
 
+    print("Checkmate")
+
     draw_back_button()
 
 
@@ -226,8 +228,8 @@ def game_screen():
                 else:
                     print("Stalemate")
 
-                pygame.quit()
-                sys.exit()
+                # pygame.quit()
+                # sys.exit()
             
             board = ThisDeadFish.make_decision(board)
             players_turn = True
@@ -379,6 +381,8 @@ def main():
             instructions_screen()
         elif current_screen == "game":
             game_screen()
+        elif current_screen == "checkmate_screen":
+            checkmate_screen()
 
         pygame.display.flip()
 
