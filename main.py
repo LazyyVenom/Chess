@@ -4,6 +4,7 @@ import webbrowser
 from board_utils import *
 from deadfish import DeadFish
 import copy
+from piece_points_maps import pieces_points_map
 
 pygame.init()
 
@@ -124,7 +125,36 @@ def instructions_screen():
     title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
     screen.blit(title_surface, title_rect)
 
+    draw_button(
+        "Pieces Points Map",
+        WIDTH // 2 - BUTTON_WIDTH // 2,
+        HEIGHT // 2 + 150,
+        pieces_points_map_screen,
+    )
+
     draw_back_button()
+
+def pieces_points_map_screen():
+    global current_screen
+    current_screen = "pieces_points_map_screen"
+    screen.fill(DARK_GRAY)
+
+    title_surface = title_font.render("Pieces Points Map", True, WHITE)
+    title_rect = title_surface.get_rect(center=(WIDTH // 2, HEIGHT // 4))
+    screen.blit(title_surface, title_rect)
+
+    draw_back_button()
+
+    def draw_piece_selection():
+        pieces = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
+        for i, piece in enumerate(pieces):
+            piece_surface = button_font.render(piece, True, WHITE)
+            piece_rect = piece_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100 + i * 50))
+            screen.blit(piece_surface, piece_rect)
+            draw_triangle(piece_rect.left - 30, piece_rect.centery, "left")
+            draw_triangle(piece_rect.right + 30, piece_rect.centery, "right")
+
+    draw_piece_selection()
 
 
 def draw_color_box(x, y, color, selected):
