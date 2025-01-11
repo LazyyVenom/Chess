@@ -139,10 +139,16 @@ def instructions_screen():
 
 
 def draw_piece_points_map(piece_points_map):
+    SQUARE_SIZE = 40
     for row in range(8):
         for col in range(8):
             point_at_square = piece_points_map[row][col]
-            
+            color_intensity = min(255, max(0, int(point_at_square) * 25))
+            color = (255, 255 - color_intensity, 255)
+            offset_x = (WIDTH - 8 * SQUARE_SIZE) // 2
+            offset_y = (HEIGHT - 8 * SQUARE_SIZE) // 2 + 100
+            pygame.draw.rect(screen, (0,0,0), pygame.Rect(col * SQUARE_SIZE + offset_x, row * SQUARE_SIZE + offset_y, SQUARE_SIZE, SQUARE_SIZE))
+            pygame.draw.rect(screen, color, pygame.Rect(col * SQUARE_SIZE-2 + offset_x, row * SQUARE_SIZE-2 + offset_y, SQUARE_SIZE-2, SQUARE_SIZE-2))
 
 def draw_piece_selection():
     global current_piece_index
@@ -430,14 +436,14 @@ def main():
                     o = opp
                     p = player
                     board = [
-                        [f"{o}r",f"{o}n",f"{o}b",f"{o}k",f"{o}q",f"{o}b",f"{o}n",f"{o}r",],
+                        [f"{o}r",f"{o}n",f"{o}b",f"{o}q",f"{o}k",f"{o}b",f"{o}n",f"{o}r",],
                         [f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",f"{o}p",],
                         ["--","--","--","--","--","--","--","--",],
                         ["--","--","--","--","--","--","--","--",],
                         ["--","--","--","--","--","--","--","--",],
                         ["--","--","--","--","--","--","--","--",],
                         [f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",f"{p}p",],
-                        [f"{p}r",f"{p}n",f"{p}b",f"{p}k",f"{p}q",f"{p}b",f"{p}n",f"{p}r",],
+                        [f"{p}r",f"{p}n",f"{p}b",f"{p}q",f"{p}k",f"{p}b",f"{p}n",f"{p}r",],
                     ]
 
         if current_screen == "main_menu":
