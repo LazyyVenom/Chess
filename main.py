@@ -23,8 +23,10 @@ SQUARE_SIZE = 75
 
 player = "w"
 opp = "b"
+pieces = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
+current_piece_index = 0
 
-title_font = pygame.font.Font(None, 100)
+title_font = pygame.font.Font(None, 90)
 button_font = pygame.font.Font(None, 48)
 
 BUTTON_WIDTH, BUTTON_HEIGHT = 250, 60
@@ -56,7 +58,7 @@ def draw_button(text, x, y, action=None):
     is_hovered = button_rect.collidepoint(mouse)
 
     target_scale = HOVER_SCALE if is_hovered else 1.0
-    scale = button_scales[text]
+    scale = button_scales.get(text,1)
     scale += (target_scale - scale) * ANIMATION_SPEED
     button_scales[text] = scale
 
@@ -126,7 +128,7 @@ def instructions_screen():
     screen.blit(title_surface, title_rect)
 
     draw_button(
-        "Pieces Points Map",
+        "Points Map",
         WIDTH // 2 - BUTTON_WIDTH // 2,
         HEIGHT // 2 + 150,
         pieces_points_map_screen,
@@ -134,8 +136,26 @@ def instructions_screen():
 
     draw_back_button()
 
+
+def draw_piece_selection():
+    global current_piece_index
+    triangle_y = HEIGHT // 2 - 100
+    triangle_x = WIDTH // 2 - 130
+
+    draw_triangle(triangle_x, triangle_y, "left")
+
+    piece_surface = button_font.render(
+        pieces[current_piece_index], True, WHITE
+    )
+    piece_rect = piece_surface.get_rect(center=(WIDTH // 2, triangle_y))
+    screen.blit(piece_surface, piece_rect)
+
+    draw_triangle(triangle_x + 260, triangle_y, "right")
+
+
 def pieces_points_map_screen():
-    global current_screen
+    global current_screen, current_piece_index
+
     current_screen = "pieces_points_map_screen"
     screen.fill(DARK_GRAY)
 
@@ -145,16 +165,35 @@ def pieces_points_map_screen():
 
     draw_back_button()
 
-    def draw_piece_selection():
-        pieces = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
-        for i, piece in enumerate(pieces):
-            piece_surface = button_font.render(piece, True, WHITE)
-            piece_rect = piece_surface.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 100 + i * 50))
-            screen.blit(piece_surface, piece_rect)
-            draw_triangle(piece_rect.left - 30, piece_rect.centery, "left")
-            draw_triangle(piece_rect.right + 30, piece_rect.centery, "right")
-
     draw_piece_selection()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            global running
+            running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_pos = event.pos
+
+            if (
+                WIDTH // 2 - 125 <= mouse_pos[0] <= WIDTH // 2 - 105
+                and HEIGHT // 2 - 100 - 20
+                <= mouse_pos[1]
+                <= HEIGHT // 2 - 100 + 20
+            ):
+                current_piece_index = (current_piece_index - 1) % len(
+                    pieces
+                )
+
+            elif (
+                WIDTH // 2 + 110 <= mouse_pos[0] <= WIDTH // 2 + 130
+                and HEIGHT // 2 - 100 - 20
+                <= mouse_pos[1]
+                <= HEIGHT // 2 - 100 + 20
+            ):
+                current_piece_index = (current_piece_index + 1) % len(
+                    pieces
+                )
 
 
 def draw_color_box(x, y, color, selected):
@@ -319,7 +358,7 @@ def game_screen():
 
 
 def main():
-    global current_screen, selected_color, current_version_index, player, opp, board
+    global current_screen, selected_color, current_version_index,current_piece_index, player, opp, board
     global selected_piece, valid_moves
 
     selected_piece = None
@@ -404,6 +443,8 @@ def main():
             result_screen("Checkmate")
         elif current_screen == "result_screen_stalemate":
             result_screen("Stalemate")
+        elif current_screen == "pieces_points_map_screen":
+            pieces_points_map_screen()
 
         pygame.display.flip()
 
