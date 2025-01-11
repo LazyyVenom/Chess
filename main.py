@@ -24,6 +24,7 @@ SQUARE_SIZE = 75
 player = "w"
 opp = "b"
 pieces = ["Pawn", "Knight", "Bishop", "Rook", "Queen", "King"]
+pieces_short = ["p", "n", "b", "r", "q", "k"]
 current_piece_index = 0
 
 title_font = pygame.font.Font(None, 90)
@@ -137,6 +138,12 @@ def instructions_screen():
     draw_back_button()
 
 
+def draw_piece_points_map(piece_points_map):
+    for row in range(8):
+        for col in range(8):
+            point_at_square = piece_points_map[row][col]
+            
+
 def draw_piece_selection():
     global current_piece_index
     triangle_y = HEIGHT // 2 - 100
@@ -194,6 +201,8 @@ def pieces_points_map_screen():
                 current_piece_index = (current_piece_index + 1) % len(
                     pieces
                 )
+    
+    draw_piece_points_map(pieces_points_map[pieces_short[current_piece_index]])
 
 
 def draw_color_box(x, y, color, selected):
