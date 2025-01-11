@@ -167,7 +167,7 @@ class DeadFish:
         return board[::-1]
 
 
-def deadfish_v1_eval(board: List[List[str]], move) -> List[List[str]]:
+def deadfish_v1_eval(board: List[List[str]]) -> List[List[str]]:
     """
     Deadfish Version 1 AI (For Deciding Moves)
     """
