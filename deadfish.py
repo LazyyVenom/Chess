@@ -167,4 +167,15 @@ class DeadFish:
                 return board[::-1]
 
         return board[::-1]
-    
+
+
+def deadfish_v1(board: List[List[str]], deadfish : DeadFish) -> List[List[str]]:
+    """
+    Deadfish Version 1 AI (For Deciding Moves)
+    """
+    best_move = None
+
+
+
+
+    return best_move
