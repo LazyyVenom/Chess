@@ -140,8 +140,6 @@ class DeadFish:
 
             new_valid_moves = valid_moves.copy()
 
-            opp_color = "w" if self.deadfish_color == "b" else "b"
-
             for move in new_valid_moves:
                 temp_board = copy.deepcopy(board)
                 temp_board = move_piece(temp_board, (row, col), move)
@@ -169,14 +167,43 @@ class DeadFish:
         return board[::-1]
 
 
-def deadfish_v1(board: List[List[str]], deadfish : DeadFish) -> List[List[str]]:
+def deadfish_v1_eval(board: List[List[str]], move) -> List[List[str]]:
     """
     Deadfish Version 1 AI (For Deciding Moves)
     """
     best_move = None
 
-    possible_pieces = []
+    # board = board[::-1]
+    # possible_pieces = []
 
+    # for row, board_row in enumerate(board):
+    #     for col, piece in enumerate(board_row):
+    #         if piece[0] == deadfish.deadfish_color:
+    #             possible_pieces.append((row, col))
 
+    # for piece in possible_pieces:
+    #     row, col = piece
+    #     valid_moves = valid_move_decider(board, piece, (not deadfish.king_moved,not deadfish.left_rook_moved,not deadfish.right_rook_moved))
+    #     new_valid_moves = valid_moves.copy()
+
+    #     for move in new_valid_moves:
+    #         temp_board = copy.deepcopy(board)
+    #         temp_board = move_piece(temp_board, (row, col), move)
+    #         if deadfish.inCheck(temp_board[::-1]):
+    #             valid_moves.remove(move)
+
+    #     for move in valid_moves:
+    #         move = random.choice(valid_moves)
+
+    #         # Checking if rook moved
+    #         if board[row][col][1] == "r":
+    #             if col == 0 and not deadfish.left_rook_moved:
+    #                 deadfish.left_rook_moved = True
+    #             elif row == 7 and not deadfish.right_rook_moved:
+    #                 deadfish.right_rook_moved = True
+
+    #         # Checking if king moved
+    #         if board[row][col][1] == "k":
+    #             deadfish.king_moved = True
 
     return best_move
