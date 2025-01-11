@@ -5,6 +5,7 @@ from board_utils import move_piece,  valid_move_decider
 import copy
 import threading
 
+
 class DeadFish:
     def __init__(self, version_idx: int, deadfish_color: str):
         self.version_idx = version_idx
