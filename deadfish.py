@@ -4,7 +4,7 @@ import random
 from board_utils import move_piece,  valid_move_decider
 import copy
 import threading
-
+from piece_points_maps import pieces_points_map
 
 class DeadFish:
     def __init__(self, version_idx: int, deadfish_color: str):
@@ -173,6 +173,7 @@ def deadfish_v1_eval(board: List[List[str]]) -> List[List[str]]:
     """
     best_move = None
 
+    pieces_points_map
 
     # board = board[::-1]
     # possible_pieces = []
