@@ -175,6 +175,7 @@ def deadfish_v1(board: List[List[str]], deadfish : DeadFish) -> List[List[str]]:
     """
     best_move = None
 
+    possible_pieces = []
 
 
 
