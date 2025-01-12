@@ -133,11 +133,7 @@ class DeadFish:
     def make_decision(self, board: List[List[str]]) -> List[List[str]]:
         board = board[::-1]
         
-        for row in board:
-            print(row)
-
         row, col, best_move =  deadfish_v1_eval(board, self)
-        print("Best Move for Deadfish: ", row, col, best_move)
 
         # Checking if rook moved
         if board[row][col][1] == "r":
@@ -152,9 +148,6 @@ class DeadFish:
 
         move_piece(board, (row, col), best_move)
 
-        for row in board:
-            print(row)
-
         return board[::-1]
 
 
@@ -162,9 +155,9 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
     """
     Deadfish Version 1 AI (For Deciding Moves)
     """
-    best_move = None
+    overall_best_move = None
+    overall_best_score = -100000
     eval_board = copy.deepcopy(board)
-    best_score = -100000
 
     possible_pieces = []
 
@@ -173,9 +166,8 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
             if piece[0] == deadfish.deadfish_color:
                 possible_pieces.append((row, col))
     
-    for row, col in possible_pieces:
-        print("Checking For Piece: ", row, col)
-        valid_moves = valid_move_decider(eval_board, (row, col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
+    for piece_row, piece_col in possible_pieces:
+        valid_moves = valid_move_decider(eval_board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
         
         if not valid_moves:
             continue
@@ -183,13 +175,13 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
         valid_moves_copy = valid_moves.copy()
         for move in valid_moves_copy:
             temp_board = copy.deepcopy(eval_board)
-            temp_board = move_piece(temp_board, (row, col), move)
+            temp_board = move_piece(temp_board, (piece_row, piece_col), move)
             if deadfish.inCheck(temp_board):
                 valid_moves.remove(move)
 
         for move in valid_moves:
             temp_board = copy.deepcopy(eval_board)
-            temp_board = move_piece(temp_board, (row, col), move)
+            temp_board = move_piece(temp_board, (piece_row, piece_col), move)
             score = 0
 
             for row in range(8):
@@ -200,9 +192,8 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
                     elif piece != '--':
                         score -= points_per_piece[piece[1]]
 
-            if score > best_score:
-                print(score)
-                best_score = score
-                best_move = (row, col, move)
+            if score > overall_best_score:
+                overall_best_score = score
+                overall_best_move = (piece_row, piece_col, move)
 
-    return best_move
+    return overall_best_move
