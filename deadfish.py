@@ -6,6 +6,15 @@ import copy
 import threading
 from piece_points_maps import pieces_points_map
 
+points_per_piece = {
+    "p": 100,
+    "n": 300,
+    "b": 300,
+    "r": 500,
+    "q": 900,
+    "k": 10000
+}
+
 class DeadFish:
     def __init__(self, version_idx: int, deadfish_color: str):
         self.version_idx = version_idx
@@ -167,14 +176,41 @@ class DeadFish:
         return board[::-1]
 
 
-def deadfish_v1_eval(board: List[List[str]]) -> List[List[str]]:
+def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish) -> List[List[str]]:
     """
     Deadfish Version 1 AI (For Deciding Moves)
     """
     best_move = None
-
+    eval_board = copy.deepcopy(board)
+    best_score = -1000000
     
+    for row in range(8):
+        for col in range(8):
+            piece = eval_board[row][col]
+            if piece[0] == deadfish.deadfish_color:
+                valid_moves = valid_move_decider(eval_board, (row, col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
 
-    
+                for move in valid_moves:
+                    temp_board = copy.deepcopy(eval_board)
+                    temp_board = move_piece(temp_board, (row, col), move)
+                    if deadfish.inCheck(temp_board):
+                        valid_moves.remove(move)
+
+                for move in valid_moves:
+                    temp_board = copy.deepcopy(eval_board)
+                    temp_board = move_piece(temp_board, (row, col), move)
+                    score = 0
+
+                    for row in range(8):
+                        for col in range(8):
+                            piece = temp_board[row][col]
+                            if piece[0] == deadfish.deadfish_color:
+                                score += points_per_piece[piece[1]]
+                            else:
+                                score -= points_per_piece[piece[1]]
+
+                    if score > best_score:
+                        best_score = score
+                        best_move = (row, col, move)
 
     return best_move
