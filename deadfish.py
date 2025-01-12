@@ -173,7 +173,7 @@ def deadfish_v1_eval(board: List[List[str]]) -> List[List[str]]:
     """
     best_move = None
 
-    pieces_points_map
+    
 
     
 
