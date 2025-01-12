@@ -143,8 +143,8 @@ def draw_piece_points_map(piece_points_map):
     for row in range(8):
         for col in range(8):
             point_at_square = piece_points_map[row][col]
-            color_intensity = min(255, max(0, int(point_at_square) * 25))
-            color = (255, 255 - color_intensity, 255)
+            color_intensity = min(255, max(0, int(point_at_square) * 30))
+            color = (120, 255 - color_intensity, 230)
             offset_x = (WIDTH - 8 * SQUARE_SIZE) // 2
             offset_y = (HEIGHT - 8 * SQUARE_SIZE) // 2 + 100
             pygame.draw.rect(screen, (0,0,0), pygame.Rect(col * SQUARE_SIZE + offset_x, row * SQUARE_SIZE + offset_y, SQUARE_SIZE, SQUARE_SIZE))
