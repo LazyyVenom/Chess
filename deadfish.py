@@ -172,7 +172,7 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish) -> List[List[st
                             piece = temp_board[row][col]
                             if piece[0] == deadfish.deadfish_color:
                                 score += points_per_piece[piece[1]]
-                            else:
+                            elif piece != '--':
                                 score -= points_per_piece[piece[1]]
 
                     if score > best_score:
