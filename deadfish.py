@@ -191,6 +191,10 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
                         score += points_per_piece[piece[1]]
                     elif piece != '--':
                         score -= points_per_piece[piece[1]]
+                    
+                    piece_position_factor = pieces_points_map[piece[1]][row][col] if piece != '--' else 0
+
+                    score += len(possible_pieces) * piece_position_factor
 
             if score > overall_best_score:
                 overall_best_score = score
