@@ -151,53 +151,88 @@ class DeadFish:
         return board[::-1]
 
 
-def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
+def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish, depth: int = 3, alpha: int = -100000, beta: int = 100000, maximizing_player: bool = True):
     """
-    Deadfish Version 1 AI (For Deciding Moves)
+    Deadfish Version 1 AI (For Deciding Moves) with Alpha-Beta Pruning and Multithreading
     """
+    def evaluate_board(board: List[List[str]], deadfish: DeadFish) -> int:
+        score = 0
+        for row in range(8):
+            for col in range(8):
+                piece = board[row][col]
+                if piece[0] == deadfish.deadfish_color:
+                    score += points_per_piece[piece[1]]
+                elif piece != '--':
+                    score -= points_per_piece[piece[1]]
+                
+                piece_position_factor = pieces_points_map[piece[1]][row][col] if piece != '--' else 0
+                score += piece_position_factor
+        return score
+
+    def minimax(board: List[List[str]], depth: int, alpha: int, beta: int, maximizing_player: bool, deadfish: DeadFish) -> int:
+        if depth == 0 or deadfish.stalemate(board):
+            return evaluate_board(board, deadfish)
+
+        if maximizing_player:
+            max_eval = -100000
+            possible_pieces = [(row, col) for row in range(8) for col in range(8) if board[row][col][0] == deadfish.deadfish_color]
+            for piece_row, piece_col in possible_pieces:
+                valid_moves = valid_move_decider(board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
+                for move in valid_moves:
+                    temp_board = copy.deepcopy(board)
+                    temp_board = move_piece(temp_board, (piece_row, piece_col), move)
+                    if deadfish.inCheck(temp_board):
+                        continue
+                    eval = minimax(temp_board, depth - 1, alpha, beta, False, deadfish)
+                    max_eval = max(max_eval, eval)
+                    alpha = max(alpha, eval)
+                    if beta <= alpha:
+                        break
+            return max_eval
+        else:
+            min_eval = 100000
+            opp_color = "w" if deadfish.deadfish_color == "b" else "b"
+            possible_pieces = [(row, col) for row in range(8) for col in range(8) if board[row][col][0] == opp_color]
+            for piece_row, piece_col in possible_pieces:
+                valid_moves = valid_move_decider(board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
+                for move in valid_moves:
+                    temp_board = copy.deepcopy(board)
+                    temp_board = move_piece(temp_board, (piece_row, piece_col), move)
+                    if deadfish.inCheck(temp_board):
+                        continue
+                    eval = minimax(temp_board, depth - 1, alpha, beta, True, deadfish)
+                    min_eval = min(min_eval, eval)
+                    beta = min(beta, eval)
+                    if beta <= alpha:
+                        break
+            return min_eval
+
     overall_best_move = None
     overall_best_score = -100000
-    eval_board = copy.deepcopy(board)
+    possible_pieces = [(row, col) for row in range(8) for col in range(8) if board[row][col][0] == deadfish.deadfish_color]
 
-    possible_pieces = []
+    threads = []
+    results = []
 
-    for row, board_row in enumerate(board):
-        for col, piece in enumerate(board_row):
-            if piece[0] == deadfish.deadfish_color:
-                possible_pieces.append((row, col))
-    
-    for piece_row, piece_col in possible_pieces:
-        valid_moves = valid_move_decider(eval_board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
-        
-        if not valid_moves:
-            continue
-
-        valid_moves_copy = valid_moves.copy()
-        for move in valid_moves_copy:
-            temp_board = copy.deepcopy(eval_board)
+    def thread_worker(piece_row, piece_col):
+        nonlocal overall_best_move, overall_best_score, alpha, beta
+        valid_moves = valid_move_decider(board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
+        for move in valid_moves:
+            temp_board = copy.deepcopy(board)
             temp_board = move_piece(temp_board, (piece_row, piece_col), move)
             if deadfish.inCheck(temp_board):
-                valid_moves.remove(move)
-
-        for move in valid_moves:
-            temp_board = copy.deepcopy(eval_board)
-            temp_board = move_piece(temp_board, (piece_row, piece_col), move)
-            score = 0
-
-            for row in range(8):
-                for col in range(8):
-                    piece = temp_board[row][col]
-                    if piece[0] == deadfish.deadfish_color:
-                        score += points_per_piece[piece[1]]
-                    elif piece != '--':
-                        score -= points_per_piece[piece[1]]
-                    
-                    piece_position_factor = pieces_points_map[piece[1]][row][col] if piece != '--' else 0
-
-                    score += len(possible_pieces) * piece_position_factor
-
+                continue
+            score = minimax(temp_board, depth - 1, alpha, beta, False, deadfish)
             if score > overall_best_score:
                 overall_best_score = score
                 overall_best_move = (piece_row, piece_col, move)
+
+    for piece_row, piece_col in possible_pieces:
+        thread = threading.Thread(target=thread_worker, args=(piece_row, piece_col))
+        threads.append(thread)
+        thread.start()
+
+    for thread in threads:
+        thread.join()
 
     return overall_best_move
