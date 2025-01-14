@@ -209,9 +209,8 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
 
 def deadfish_v2_eval(board: List[List[str]], deadfish: DeadFish, player_king_details: tuple):
     """
-    Deadfish v2 with alpha beta minimax pruning
+    Deadfish v2 with alpha beta minimax pruning and multithreading
     """
-    print("I run")
     def minimax(board, depth, alpha, beta, maximizing_player, deadfish, player_king_details):
         if depth == 0 or deadfish.stalemate(board):
             return evaluate_board(board, deadfish)
@@ -268,18 +267,35 @@ def deadfish_v2_eval(board: List[List[str]], deadfish: DeadFish, player_king_det
                     possible_pieces.append((row, col))
         return possible_pieces
 
+    def evaluate_move(piece_row, piece_col, move, board, deadfish, player_king_details, results, index):
+        temp_board = copy.deepcopy(board)
+        temp_board = move_piece(temp_board, (piece_row, piece_col), move)
+        score = minimax(temp_board, 2, -float('inf'), float('inf'), False, deadfish, player_king_details)
+        results[index] = (score, (piece_row, piece_col, move))
+
     overall_best_move = None
     overall_best_score = -float('inf')
     possible_pieces = get_possible_pieces(board, deadfish.deadfish_color)
+    threads = []
+    results = [None] * (len(possible_pieces) * 64)  # Assuming max 64 moves per piece
 
+    index = 0
     for piece_row, piece_col in possible_pieces:
         valid_moves = valid_move_decider(board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
         for move in valid_moves:
-            temp_board = copy.deepcopy(board)
-            temp_board = move_piece(temp_board, (piece_row, piece_col), move)
-            score = minimax(temp_board, 2, -float('inf'), float('inf'), False, deadfish, player_king_details)
+            thread = threading.Thread(target=evaluate_move, args=(piece_row, piece_col, move, board, deadfish, player_king_details, results, index))
+            threads.append(thread)
+            thread.start()
+            index += 1
+
+    for thread in threads:
+        thread.join()
+
+    for result in results:
+        if result is not None:
+            score, move = result
             if score > overall_best_score:
                 overall_best_score = score
-                overall_best_move = (piece_row, piece_col, move)
+                overall_best_move = move
 
     return overall_best_move
