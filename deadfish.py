@@ -270,7 +270,7 @@ def deadfish_v2_eval(board: List[List[str]], deadfish: DeadFish, player_king_det
     def evaluate_move(piece_row, piece_col, move, board, deadfish, player_king_details, results, index):
         temp_board = copy.deepcopy(board)
         temp_board = move_piece(temp_board, (piece_row, piece_col), move)
-        score = minimax(temp_board, 2, -float('inf'), float('inf'), False, deadfish, player_king_details)
+        score = minimax(temp_board, 1, -float('inf'), float('inf'), False, deadfish, player_king_details)
         results[index] = (score, (piece_row, piece_col, move))
 
     overall_best_move = None
