@@ -23,10 +23,11 @@ def load_images():
 images = load_images()
 
 def draw_board(window, valid_moves,selected=None,player_color='w'):
-    if player_color == 'b':
+    if player_color == 'w':
         colors = [LIGHT_BLUE, DARK_BLUE]
     else:
         colors = [DARK_BLUE, LIGHT_BLUE]
+        
     for row in range(8):
         for col in range(8):
             if (row, col) in valid_moves:
