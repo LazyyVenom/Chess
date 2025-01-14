@@ -151,7 +151,7 @@ class DeadFish:
         return board[::-1]
 
 
-def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish, depth: int = 3, alpha: int = -100000, beta: int = 100000, maximizing_player: bool = True):
+def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish, depth: int = 2, alpha: int = -100000, beta: int = 100000, maximizing_player: bool = True):
     """
     Deadfish Version 1 AI (For Deciding Moves) with Alpha-Beta Pruning and Multithreading
     """
