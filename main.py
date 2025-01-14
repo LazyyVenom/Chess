@@ -431,7 +431,7 @@ def main():
                     left_rook_moved = False
                     right_rook_moved = False
                     players_turn = True if player == "w" else False
-                    ThisDeadFish = DeadFish(current_version_index,deadfish_color=opp)
+                    ThisDeadFish = DeadFish(current_version_index+1,deadfish_color=opp)
 
                     o = opp
                     p = player
