@@ -104,7 +104,7 @@ def move_piece(board: List[list[str]], original_pos: tuple, new_pos: tuple):
             board[original_pos[0]][original_pos[1]] = '--'
 
         else:
-            board[new_pos[0]][3] = board[new_pos[0]][7]
+            board[new_pos[0]][5] = board[new_pos[0]][7]
             board[new_pos[0]][7] = '--'
             board[new_pos[0]][new_pos[1]] = board[original_pos[0]][original_pos[1]]
             board[original_pos[0]][original_pos[1]] = '--'

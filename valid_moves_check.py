@@ -113,7 +113,7 @@ class Valid_Moves:
 
         if king_for_castling:
             if left_rook_for_castling:
-                if board[coords[0]][coords[1] - 1] == "--" and board[coords[0]][coords[1] - 2] == "--":
+                if board[coords[0]][coords[1] - 1] == "--" and board[coords[0]][coords[1] - 2] == "--" and board[coords[0]][coords[1] - 3] == "--":
                     possible_moves.append((coords[0], coords[1] - 2))
             
             if right_rook_for_castling:
