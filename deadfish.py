@@ -201,3 +201,55 @@ def deadfish_v1_eval(board: List[List[str]], deadfish: DeadFish):
                 overall_best_move = (piece_row, piece_col, move)
 
     return overall_best_move
+
+
+def deadfish_v2_eval(board: List[List[str]], deadfish: DeadFish):
+    """
+    Deadfish v2 with alpha beta minimax pruning
+    """
+    overall_best_move = None
+    overall_best_score = -100000
+    eval_board = copy.deepcopy(board)
+
+    possible_pieces = []
+
+    for row, board_row in enumerate(board):
+        for col, piece in enumerate(board_row):
+            if piece[0] == deadfish.deadfish_color:
+                possible_pieces.append((row, col))
+    
+    for piece_row, piece_col in possible_pieces:
+        valid_moves = valid_move_decider(eval_board, (piece_row, piece_col), (not deadfish.king_moved, not deadfish.left_rook_moved, not deadfish.right_rook_moved))
+        
+        if not valid_moves:
+            continue
+
+        valid_moves_copy = valid_moves.copy()
+        for move in valid_moves_copy:
+            temp_board = copy.deepcopy(eval_board)
+            temp_board = move_piece(temp_board, (piece_row, piece_col), move)
+            if deadfish.inCheck(temp_board):
+                valid_moves.remove(move)
+
+        for move in valid_moves:
+            temp_board = copy.deepcopy(eval_board)
+            temp_board = move_piece(temp_board, (piece_row, piece_col), move)
+            score = 0
+
+            for row in range(8):
+                for col in range(8):
+                    piece = temp_board[row][col]
+                    if piece[0] == deadfish.deadfish_color:
+                        score += points_per_piece[piece[1]]
+                    elif piece != '--':
+                        score -= points_per_piece[piece[1]]
+                    
+                    piece_position_factor = pieces_points_map[piece[1]][row][col] if piece != '--' else 0
+
+                    score += len(possible_pieces) * piece_position_factor
+
+            if score > overall_best_score:
+                overall_best_score = score
+                overall_best_move = (piece_row, piece_col, move)
+
+    return overall_best_move
