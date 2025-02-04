@@ -6,11 +6,6 @@ from deadfish import DeadFish
 import copy
 from piece_points_maps import pieces_points_map
 import os
-try:
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    sys.path.append(base_path)
-except:
-    print("Didn't able to set this as working path")
 
 pygame.init()
 
